@@ -1,5 +1,5 @@
 import auth.global_def as AuthDef
-import transaction.global_def as TransactionDef
+import transaction.transaction as Tr
 import menu.menu as Menu
 import auth.auth as Auth
 
