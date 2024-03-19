@@ -1,4 +1,5 @@
 import os
+from auth import global_def
 
 def clearScreen():
     """ 
@@ -63,5 +64,26 @@ def showMainMenu():
     print("|                   2. Registrasi                      |");
     print("|                   3. Keluar                          |");
     print("|                                                      |");
+    print("|                                                      |");
+    print("|______________________________________________________|");
+
+def showHomeMenu(username):
+    """
+        Menampilkan menu setelah berhasil melakukan registrasi ataupun login.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+    """
+    print(" ______________________________________________________ ");
+    print("|                                                      |");
+    print("|           HALO! Apa yang bisa kami bantu?            |");
+    print("|______________________________________________________|");
+    print("|                                                      |");
+    print("|                1. Lihat Rekap                        |");
+    print("|                2. Lihat Riwayat Transaksi            |");
+    print("|                3. Lihat Saldo & Mutasi Terakhir      |");
+    print("|                4. Catat Keuangan                     |");
+    print("|                5. Log Out                            |");
     print("|                                                      |");
     print("|______________________________________________________|");
