@@ -12,3 +12,9 @@ if __name__ == '__main__':
     Sementara menggunakan None sebagai username untuk pengetesan.
     """
     Menu.showHomeMenu(username=None)
+
+    """
+      Testing input dan simpan transaksi.
+      Udah dulu mas, pen turu.
+      """
+    Tr.recordDebit()
