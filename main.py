@@ -5,6 +5,7 @@ import auth.auth as Auth
 
 if __name__ == '__main__':
     print("Tampil menu")
+    # Testing showMainMenu()
     Menu.showMainMenu()
     """
     Apabila registrasi berhasil dilakukan, maka tampilkan home menu.
