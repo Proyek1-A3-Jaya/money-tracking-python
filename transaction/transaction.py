@@ -65,3 +65,26 @@ def showMonthlyRecap(year, month):
     print(f"Rekap Bulan {month}/{year}:")
     print(f"Total Pemasukan {totalDebit}")
     print(f"Total Pengeluaran {totalCredit}")
+
+def showDailyRecap(year, month, day):
+    """
+        Menampilkan rekap transaksi bulanan.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+    """
+    totalDebit = 0
+    totalCredit = 0
+    with open('money.txt', 'r') as file:
+        for line in file:
+            data = line.split('|')
+            transDate = data[0].strip()
+            transYear, transMonth, transDate = transDate.split('-')
+            if int(transYear) == year and transMonth == month and transDate == day:
+                totalDebit += int(data[1].strip())
+                totalCredit += int(data[2].strip())
+    print(f"Rekap tanggal {day}/{month}/{year}")
+    print('-----------------------------------')
+    print(f"Total Pemasukan: {totalDebit}")
+    print(f"Total Pengeluaran: {totalCredit}")
