@@ -27,16 +27,15 @@ class User:
         print("==================REGISTER==================")
         name = input("Masukkan nama anda: ")
         username = input("Masukkan username anda: ")
-        if auth.registerValid(username):
+        if auth.isRegisterValid(username):
             print("Username sudah terdaftar")
             print("Mohon masukkan username yang berbeda")
         else:
             password = input("Masukkan password anda: ")
             fileName = username + ".txt"
-            accFile.write(name + " ")
-            accFile.write(username + " ")
-            accFile.write(password + " ")
-            accFile.write(fileName)
+            accFile.write(
+                name + "#" + username + "#" + password + "#" + fileName + "\n"
+            )
 
         accFile.close()
 
@@ -57,7 +56,7 @@ class User:
         log = False
 
         for account in accFile:
-            account = account.split()
+            account = account.split("#")
             if account[1] == username and account[2] == password:
                 print("Login succes!!")
                 print(f"Welcome {account[0]}")

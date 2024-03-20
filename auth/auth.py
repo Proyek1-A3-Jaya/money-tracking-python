@@ -13,7 +13,7 @@ def isRegisterValid(username: str):
         return False
 
     for login in accFile:
-        login = login.split()
+        login = login.split("#")
         if login[1] == username:
             return True
             break
