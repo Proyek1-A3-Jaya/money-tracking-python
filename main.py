@@ -21,4 +21,9 @@ if __name__ == '__main__':
     """
     Testing rekap bulanan
     """
-    Tr.showMonthlyRecap(year=None, month=None)
+    # Tr.showMonthlyRecap(year=None, month=None)
+    """
+    Testing rekap harian
+    Bug, huh.
+    """
+    Tr.showDailyRecap(year=2024, month=3, day=20)
