@@ -87,3 +87,21 @@ def showHomeMenu(username):
     print("|                5. Log Out                            |");
     print("|                                                      |");
     print("|______________________________________________________|");
+
+def showTransactionMenu():
+    """
+        Menampilkan menu setelah berhasil melakukan registrasi ataupun login.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+    """
+    print(" ______________________________________________________ ");
+    print("|                                                      |");
+    print("|                   Jenis Transaksi                    |");
+    print("|______________________________________________________|");
+    print("|                                                      |");
+    print("|              1. Catat Pemasukan (Debit)              |");
+    print("|              2. Catat Pengeluaran (Credit)           |");
+    print("|                                                      |");
+    print("|______________________________________________________|");
