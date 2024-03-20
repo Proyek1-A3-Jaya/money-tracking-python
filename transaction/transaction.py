@@ -50,6 +50,8 @@ def showMonthlyRecap(year, month):
     ------
     - Farrel Zandra - 231524007 - @quack22
     """
+    year = int(input('Masukkan tahun (contoh: 2024): '))
+    month = int(input('Masukkan bulan (contoh: 1 untuk Januari): '))
     totalDebit = 0
     totalCredit = 0
     with open('money.txt','r') as file:
@@ -63,3 +65,5 @@ def showMonthlyRecap(year, month):
     print(f"Rekap Bulan {month}/{year}:")
     print(f"Total Pemasukan {totalDebit}")
     print(f"Total Pengeluaran {totalCredit}")
+
+# def

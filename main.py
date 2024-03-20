@@ -16,6 +16,9 @@ if __name__ == '__main__':
     """
       Testing input dan simpan transaksi.
       Udah dulu mas, pen turu.
-      """
+    """
     Tr.recordDebit()
+    """
+    Testing rekap bulanan
+    """
     Tr.showMonthlyRecap(year=2024, month=3)
