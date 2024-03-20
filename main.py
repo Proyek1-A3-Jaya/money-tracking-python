@@ -11,10 +11,11 @@ if __name__ == '__main__':
     Apabila registrasi berhasil dilakukan, maka tampilkan home menu.
     Sementara menggunakan None sebagai username untuk pengetesan.
     """
-    Menu.showHomeMenu(username=None)
+    Menu.showHomeMenu()
 
     """
       Testing input dan simpan transaksi.
       Udah dulu mas, pen turu.
       """
     Tr.recordDebit()
+    Tr.showMonthlyRecap(year=2024, month=3)
