@@ -41,3 +41,25 @@ def saveTransaction(transaction):
     with open('money.txt', 'a') as file:
         file.write(f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome}\n")
     print('Transaksi berhasil disimpan!')
+
+def showMonthlyRecap(year, month):
+    """
+    Menampilkan rekap transaksi bulanan.
+
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
+    """
+    totalDebit = 0
+    totalCredit = 0
+    with open('money.txt','r') as file:
+        for line in file:
+            data = line.split('|')
+            transDate = data[0].strip()
+            transYear, transMonth, _ = transDate.split('-')
+            if int(transYear) == year and int(transMonth) == month:
+                totalDebit += int(data[1].strip())
+                totalCredit += int(data[2].strip())
+    print(f"Rekap Bulan {month}/{year}:")
+    print(f"Total Pemasukan {totalDebit}")
+    print(f"Total Pengeluaran {totalCredit}")
