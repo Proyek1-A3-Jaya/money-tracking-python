@@ -21,4 +21,4 @@ if __name__ == '__main__':
     """
     Testing rekap bulanan
     """
-    Tr.showMonthlyRecap(year=2024, month=3)
+    Tr.showMonthlyRecap(year=None, month=None)
