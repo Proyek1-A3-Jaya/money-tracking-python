@@ -24,7 +24,7 @@ def recordCredit():
     ------
     - Farrel Zandra - 231524007 - @quack22
     """
-    date = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    date = datetime.now().strptime("%Y-%m-%d %H-%M-%S")
     credit = int(input('Masukkan jumlah pengeluaran: '))
 
     newTransaction = Trans.Transaction(date, 0, credit, 0)
@@ -79,9 +79,10 @@ def showDailyRecap(year, month, day):
     with open('money.txt', 'r') as file:
         for line in file:
             data = line.split('|')
-            transDate = data[0].strip()
-            transYear, transMonth, transDate = transDate.split('-')
-            if int(transYear) == year and transMonth == month and transDate == day:
+            transDateTime = data[0].strip() # mengambil elemen pertama dari array transDateTime.
+            transDate = transDateTime.split()[0] # memisahkan tanggal dan waktu, kemudian mengambil tanggal saja.
+            transYear, transMonth, transDay = transDate.split('-')
+            if int(transYear) == year and int(transMonth) == month and int(transDay) == day:
                 totalDebit += int(data[1].strip())
                 totalCredit += int(data[2].strip())
     print(f"Rekap tanggal {day}/{month}/{year}")

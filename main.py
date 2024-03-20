@@ -24,6 +24,6 @@ if __name__ == '__main__':
     # Tr.showMonthlyRecap(year=None, month=None)
     """
     Testing rekap harian
-    Bug, huh.
+    Bug fixed.
     """
     Tr.showDailyRecap(year=2024, month=3, day=20)
