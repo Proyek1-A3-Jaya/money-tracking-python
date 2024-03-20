@@ -67,7 +67,7 @@ def showMainMenu():
     print("|                                                      |");
     print("|______________________________________________________|");
 
-def showHomeMenu(username):
+def showHomeMenu():
     """
         Menampilkan menu setelah berhasil melakukan registrasi ataupun login.
 
@@ -77,7 +77,7 @@ def showHomeMenu(username):
     """
     print(" ______________________________________________________ ");
     print("|                                                      |");
-    print("|           HALO! Apa yang bisa kami bantu?            |");
+    print("|           HALO! Ada yang bisa kami bantu?            |");
     print("|______________________________________________________|");
     print("|                                                      |");
     print("|                1. Lihat Rekap                        |");
