@@ -32,7 +32,7 @@ def recordCredit():
 
 def saveTransaction(transaction):
     """
-    Menyimpan transaksi ke dalam file.
+    Menyimpan transaksi ke dalam file 'money.txt'.
 
     Author
     ------
@@ -65,5 +65,3 @@ def showMonthlyRecap(year, month):
     print(f"Rekap Bulan {month}/{year}:")
     print(f"Total Pemasukan {totalDebit}")
     print(f"Total Pengeluaran {totalCredit}")
-
-# def
