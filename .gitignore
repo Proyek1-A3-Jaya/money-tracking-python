@@ -161,3 +161,7 @@ cython_debug/
 
 # Ignore test file
 main_test.py
+
+# Ignore files
+dataAkun.bin
+money.txt
