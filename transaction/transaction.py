@@ -3,7 +3,7 @@ import transaction.global_def as Trans
 import calendar
 import datetime
 
-def recordDebit():
+def recordCredit():
     """
     Mencatat pemasukan (debit) yang diinputkan oleh pengguna.
 
@@ -48,7 +48,7 @@ def recordDebit():
     newTransaction = Trans.Transaction(date, debit, 0, new_outcome, "Uang Masuk")
     saveTransaction(newTransaction)
 
-def recordCredit():
+def recordDebit():
     """
     Mencatat pengeluaran (credit) yang diinputkan oleh pengguna.
 
