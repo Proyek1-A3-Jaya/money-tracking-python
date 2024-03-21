@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import transaction.global_def as Trans
 
 def recordDebit():
@@ -93,3 +93,32 @@ def showDailyRecap(year, month, day):
     print('-----------------------------------')
     print(f"Total Pemasukan: {totalDebit}")
     print(f"Total Pengeluaran: {totalCredit}")
+
+def showWeeklyRecap(year, month):
+    startDate = datetime(year, month, 1)
+    endDate = startDate.replace(day=28) + timedelta(days=4) # antisipasi bulan dengan tanggal kurang dari 31 hari.
+    endDate = endDate - timedelta(days=endDate.day) # pengoreksian tanggal akhir bulan.
+
+    currentDate = startDate
+    while currentDate <= endDate:
+        nextWeek = currentDate + timedelta(days=6) # penghitungan tanggal akhir minggu
+        totalDebit = 0
+        totalCredit = 0
+
+        with open('money.txt', 'r') as file:
+            for line in file:
+                data = line.split('|')
+                transDate = datetime.strptime(data[0].strip(), "%Y-%m-%d %H:%M:%S")
+                if currentDate <= transDate <= nextWeek:
+                    debit = int(data[1].strip())
+                    credit = int(data[2].strip())
+                    totalDebit += debit
+                    totalCredit += credit
+
+        print(f"Rekap minggu {currentDate.strftime('%d %B %Y')} - {nextWeek.strftime('%d %B %Y')}:")
+        print('----------------------------------')
+        print(f"Total Pemasukan  : Rp{totalDebit}")
+        print(f"Total Pengeluaran  : Rp{totalCredit}")
+        print()
+
+        currentDate = nextWeek + timedelta(days=1) # lompat ke minggu selanjutnya.
