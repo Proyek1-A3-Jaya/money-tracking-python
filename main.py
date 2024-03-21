@@ -3,7 +3,7 @@ import transaction.transaction as Tr
 import menu.menu as Menu
 import time
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     user = Auth.User("", "", "", "")
 
     while True:
@@ -21,15 +21,25 @@ if __name__ == '__main__':
             # Handle login
             Menu.clearScreen()
             success = user.login()
-            if success:
-                Menu.handleHomeMenu(user)
+            while not success:
+                time.sleep(2)
+                Menu.clearScreen()
+                success = user.login()
+
+            time.sleep(3)
+            Menu.clearScreen()
+            Menu.handleHomeMenu(user)
+            break
         elif option == 2:
             # Handle registrasi
             Menu.clearScreen()
             success = user.register()
-            if not success:
+            while not success:
                 print("Registrasi gagal, coba lagi...")
                 time.sleep(2)
+                Menu.clearScreen()
+                success = user.register()
+            break
         elif option == 3:
             print("Selamat tinggal...")
             break

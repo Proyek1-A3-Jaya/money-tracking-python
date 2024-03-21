@@ -20,6 +20,10 @@ class User:
         Author
         -----
         - Thafa Fadillah Ramdani - 231524027 - @AllThaf
+
+        Return
+        -----
+        Boolean yang menandakan keberhasilan registrasi
         """
         accFile = open("dataAkun.bin", "a")
         if accFile == None:
@@ -49,6 +53,10 @@ class User:
         Author
         -----
         - Thafa Fadillah Ramdani - 231524027 - @AllThaf
+
+        Return
+        -----
+        Boolean yang menandakan keberhasilan login
         """
         accFile = open("dataAkun.bin", "r")
         if accFile == None:
@@ -70,6 +78,6 @@ class User:
             print(
                 "Username atau password salah\nMohon masukkan username / password yang benar"
             )
-        
+
         accFile.close()
         return log
