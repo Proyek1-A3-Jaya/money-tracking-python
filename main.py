@@ -12,7 +12,6 @@ if __name__ == '__main__':
     # Sementara menggunakan None sebagai username untuk pengetesan.
     Menu.showHomeMenu()
 
-
     # Testing input dan simpan transaksi.
     # Udah dulu mas, pen turu.
     Tr.recordDebit()
@@ -23,3 +22,7 @@ if __name__ == '__main__':
     # Testing rekap harian
     # Bug fixed.
     Tr.showDailyRecap(year=None, month=None, day=None)
+
+    # Testing rekap mingguan
+    # bug, output 0.
+    Tr.showWeeklyRecap(2024, 3)
