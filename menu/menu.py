@@ -1,5 +1,6 @@
 import os
 from auth import global_def
+from auth.global_def import User
 
 def clearScreen():
     """ 
@@ -30,7 +31,7 @@ def getChoice(message: str) -> (int, bool):
         Returns
         ---------
         - int  - Input yang user berikan
-        - bool - True jika berhasil, False ketika input tidak valid
+        - bool - False jika berhasil, True ketika input tidak valid
 
         Author
         ---------
@@ -41,9 +42,9 @@ def getChoice(message: str) -> (int, bool):
 
     # Memeriksa apakah input adalah integer positif, dan bukan negatif atau selain integer
     if not choice.isnumeric():
-        return 0, False 
+        return 0, True 
     
-    return int(choice), True
+    return int(choice), False
 
 
 def showMainMenu():
@@ -105,3 +106,13 @@ def showTransactionMenu():
     print("|              2. Catat Pengeluaran (Credit)           |");
     print("|                                                      |");
     print("|______________________________________________________|");
+
+def handleHomeMenu(user: User):
+    while True:
+        showHomeMenu()
+        option, retError = getChoice("Masukkan pilihan: ")
+
+        if retError:
+            clearScreen()
+            print("Input invalid, coba lagi...")
+            break
