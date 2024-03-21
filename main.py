@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     # Testing rekap harian
     # Bug fixed.
-    Tr.showDailyRecap(year=None, month=None, day=None)
+    # Tr.showDailyRecap(year=None, month=None, day=None)
 
     # Testing rekap mingguan
     # bug, output 0.

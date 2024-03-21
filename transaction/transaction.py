@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import transaction.global_def as Trans
+import calendar
 
 def recordDebit():
     """
@@ -95,13 +96,16 @@ def showDailyRecap(year, month, day):
     print(f"Total Pengeluaran: {totalCredit}")
 
 def showWeeklyRecap(year, month):
+    countDay = calendar.monthrange(year, month)[1]
     startDate = datetime(year, month, 1)
-    endDate = startDate.replace(day=28) + timedelta(days=4) # antisipasi bulan dengan tanggal kurang dari 31 hari.
-    endDate = endDate - timedelta(days=endDate.day) # pengoreksian tanggal akhir bulan.
+    endDate = datetime(year, month, countDay)
 
     currentDate = startDate
     while currentDate <= endDate:
-        nextWeek = currentDate + timedelta(days=6) # penghitungan tanggal akhir minggu
+        nextWeek = currentDate + timedelta(days=(6-currentDate.weekday())) # penghitungan tanggal akhir minggu
+        if nextWeek > endDate:
+            nextWeek = endDate # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
+
         totalDebit = 0
         totalCredit = 0
 
