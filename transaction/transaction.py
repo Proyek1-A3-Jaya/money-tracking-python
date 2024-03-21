@@ -133,3 +133,38 @@ def showWeeklyRecap(year, month):
         print()
 
         currentDate = nextWeek + timedelta(days=1) # lompat ke minggu selanjutnya.
+
+def readTransaction(file_name):
+    """
+    Membaca transaksi dari file dan mengembalikan daftar transaksi.
+
+    Author
+    ------
+    Farras Ahmad Rasyid - 231524006 - @bamoebin
+    
+    Parameter:
+        file_name (str): Nama file yang berisi data transaksi.
+
+    Return:
+        list: Daftar transaksi yang dibaca dari file.
+    """
+    transactions = []
+
+    try:
+        with open(file_name, 'r') as file:
+            for line in file:
+                data = line.strip().split('|')
+                trans_date = data[0].strip()
+                debit = int(data[1].strip())
+                credit = int(data[2].strip())
+                outcome = int(data[3].strip())
+                
+                # Membuat objek Transaction dari data yang dibaca
+                newtransaction = Trans.Transaction(trans_date, debit, credit, outcome)
+                transactions.append(newtransaction)
+    except FileNotFoundError:
+        print("File tidak ditemukan.")
+    except Exception as e:
+        print("Terjadi kesalahan saat membaca file:", str(e))
+
+    return transactions        
