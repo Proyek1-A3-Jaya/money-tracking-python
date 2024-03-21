@@ -134,7 +134,7 @@ def showWeeklyRecap(year, month):
 
         currentDate = nextWeek + timedelta(days=1) # lompat ke minggu selanjutnya.
 
-def readTransaction(file_name):
+def readTransaction(file_name : str):
     """
     Membaca transaksi dari file dan mengembalikan daftar transaksi.
 
