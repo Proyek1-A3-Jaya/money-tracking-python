@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import transaction.global_def as Trans
 import calendar
+import datetime
 
 def recordDebit():
     """
@@ -9,9 +10,37 @@ def recordDebit():
     Author
     -----
     - Farrel Zandra - 231524007 - @quack22
+    - Satria Permata Sejati - 231524026 - @weirdokitten
     """
     # Input data transaksi berupa tanggal, debit, credit, dan outcome
-    date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    pilihTanggal = int(input
+    ("""
+        pilih tanggal :
+        1. hari ini
+        2. input manual
+    """))
+
+    if pilihTanggal == 1:
+        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if pilihTanggal == 2:
+        # Meminta pengguna memasukkan tanggal secara manual satu per satu
+        year = input("Masukkan tahun (Format: YYYY): ")
+        month = input("Masukkan bulan (Format: MM): ")
+        day = input("Masukkan hari (Format: DD): ")
+
+        # Mengambil jam, menit, dan detik dari waktu sekarang
+        current_time = datetime.datetime.now()
+        hour = current_time.strftime("%H")
+        minute = current_time.strftime("%M")
+        second = current_time.strftime("%S")
+
+        # Mengonversi input tanggal menjadi objek datetime
+        try:
+            date = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+        except ValueError:
+            print("Format tanggal tidak valid.")
+            return
+
     debit = int(input('Masukkan jumlah pemasukan: '))
 
     newTransaction = Trans.Transaction(date, debit, 0, 0)
@@ -24,8 +53,35 @@ def recordCredit():
     Author
     ------
     - Farrel Zandra - 231524007 - @quack22
+    - Satria Permata Sejati - 231524026 - @weirdokitten
     """
-    date = datetime.now().strptime("%Y-%m-%d %H-%M-%S")
+    pilihTanggal = int(input
+    ("""
+        pilih tanggal :
+        1. hari ini
+        2. input manual
+    """))
+
+    if pilihTanggal == 1:
+        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if pilihTanggal == 2:
+        # Meminta pengguna memasukkan tanggal secara manual satu per satu
+        year = input("Masukkan tahun (Format: YYYY): ")
+        month = input("Masukkan bulan (Format: MM): ")
+        day = input("Masukkan hari (Format: DD): ")
+
+        # Mengambil jam, menit, dan detik dari waktu sekarang
+        current_time = datetime.datetime.now()
+        hour = current_time.strftime("%H")
+        minute = current_time.strftime("%M")
+        second = current_time.strftime("%S")
+
+        # Mengonversi input tanggal menjadi objek datetime
+        try:
+            date = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+        except ValueError:
+            print("Format tanggal tidak valid.")
+            return
     credit = int(input('Masukkan jumlah pengeluaran: '))
 
     newTransaction = Trans.Transaction(date, 0, credit, 0)
