@@ -74,8 +74,12 @@ def showDailyRecap(year, month, day):
         ------
         - Farrel Zandra - 231524007 - @quack22
     """
+    year = int(input('Masukkan tahun (contoh: 2024): '))
+    month = int(input('Masukkan bulan (contoh: 1 untuk Januari): '))
+    day = int(input('Masukkan tanggal: '))
     totalDebit = 0
     totalCredit = 0
+
     with open('money.txt', 'r') as file:
         for line in file:
             data = line.split('|')

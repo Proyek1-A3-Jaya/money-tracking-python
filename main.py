@@ -22,4 +22,4 @@ if __name__ == '__main__':
 
     # Testing rekap harian
     # Bug fixed.
-    Tr.showDailyRecap(year=2024, month=3, day=20)
+    Tr.showDailyRecap(year=None, month=None, day=None)
