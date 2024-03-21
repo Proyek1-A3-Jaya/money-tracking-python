@@ -42,8 +42,10 @@ def recordDebit():
             return
 
     debit = int(input('Masukkan jumlah pemasukan: '))
+    last_outcome = getLastOutcome()
+    new_outcome = last_outcome - debit
 
-    newTransaction = Trans.Transaction(date, debit, 0, 0, "Uang Masuk")
+    newTransaction = Trans.Transaction(date, debit, 0, new_outcome, "Uang Masuk")
     saveTransaction(newTransaction)
 
 def recordCredit():
@@ -83,6 +85,8 @@ def recordCredit():
             print("Format tanggal tidak valid.")
             return
     credit = int(input('Masukkan jumlah pengeluaran: '))
+    last_outcome = getLastOutcome()
+    new_outcome = last_outcome + credit
 
     print("pilih kategori :")
     i = 1
@@ -96,7 +100,7 @@ def recordCredit():
             kategori = Trans.Transaction.category[i-1]
             break
 
-    newTransaction = Trans.Transaction(date, 0, credit, 0, kategori)
+    newTransaction = Trans.Transaction(date, 0, credit, new_outcome, kategori)
     saveTransaction(newTransaction)
 
 def saveTransaction(transaction):
@@ -263,3 +267,25 @@ def sortTransaction(file_name="money.txt"):
         print("Data berhasil diurutkan berdasarkan tanggal.")
     except Exception as e:
         print("Terjadi kesalahan saat mengurutkan data:", str(e))
+
+def getLastOutcome():
+    """
+    Mendapatkan nilai outcome terakhir dari file transaksi.
+
+    Author
+    ------
+    - Satria Permata Sejati - 231524026 - @WeirdoKitten
+    """
+    try:
+        with open('money.txt', 'r') as file:
+            lines = file.readlines()
+            if lines:
+                last_line = lines[-1].strip()
+                data = last_line.split('|')
+                last_outcome = int(data[3].strip())  # Ambil nilai outcome terakhir dari baris terakhir
+            else:
+                last_outcome = 0  # Jika file kosong, maka outcome terakhir adalah 0
+    except FileNotFoundError:
+        print("File tidak ditemukan.")
+        last_outcome = 0
+    return last_outcome
