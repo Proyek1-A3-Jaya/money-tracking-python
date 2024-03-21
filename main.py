@@ -1,28 +1,38 @@
-import auth.global_def as AuthDef
+import auth.global_def as Auth
 import transaction.transaction as Tr
 import menu.menu as Menu
-import auth.auth as Auth
+import time
 
 if __name__ == '__main__':
-    print("Tampil menu")
-    # Testing showMainMenu()
-    Menu.showMainMenu()
+    user = Auth.User("", "", "", "")
 
-    # Apabila registrasi berhasil dilakukan, maka tampilkan home menu.
-    # Sementara menggunakan None sebagai username untuk pengetesan.
-    Menu.showHomeMenu()
+    while True:
+        Menu.clearScreen()
+        Menu.showMainMenu()
+        option, retError = Menu.getChoice("Masukkan pilihan: ")
 
-    # Testing input dan simpan transaksi.
-    # Udah dulu mas, pen turu.
-    Tr.recordDebit()
+        if retError:
+            Menu.clearScreen()
+            print("Pilihan tidak valid, coba lagi...")
+            time.sleep(2)
+            continue
 
-    # Testing rekap bulanan
-    # Tr.showMonthlyRecap(year=None, month=None)
-
-    # Testing rekap harian
-    # Bug fixed.
-    # Tr.showDailyRecap(year=None, month=None, day=None)
-
-    # Testing rekap mingguan
-    # bug, output 0.
-    Tr.showWeeklyRecap(2024, 3)
+        if option == 1:
+            # Handle login
+            Menu.clearScreen()
+            success = user.login()
+            if success:
+                Menu.handleHomeMenu(user)
+        elif option == 2:
+            # Handle registrasi
+            Menu.clearScreen()
+            success = user.register()
+            if not success:
+                print("Registrasi gagal, coba lagi...")
+                time.sleep(2)
+        elif option == 3:
+            print("Selamat tinggal...")
+            break
+        else:
+            print("Pilihan tidak ada, coba lagi...")
+            time.sleep(2)
