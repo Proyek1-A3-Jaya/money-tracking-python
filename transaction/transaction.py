@@ -96,6 +96,13 @@ def showDailyRecap(year, month, day):
     print(f"Total Pengeluaran: {totalCredit}")
 
 def showWeeklyRecap(year, month):
+    """
+        Menampilkan rekap transaksi mingguan dalam satu bulan.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+        """
     countDay = calendar.monthrange(year, month)[1]
     startDate = datetime(year, month, 1)
     endDate = datetime(year, month, countDay)
