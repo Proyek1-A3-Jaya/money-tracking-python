@@ -43,7 +43,7 @@ def recordDebit():
 
     debit = int(input('Masukkan jumlah pemasukan: '))
 
-    newTransaction = Trans.Transaction(date, debit, 0, 0)
+    newTransaction = Trans.Transaction(date, debit, 0, 0, "Uang Masuk")
     saveTransaction(newTransaction)
 
 def recordCredit():
@@ -84,7 +84,19 @@ def recordCredit():
             return
     credit = int(input('Masukkan jumlah pengeluaran: '))
 
-    newTransaction = Trans.Transaction(date, 0, credit, 0)
+    print("pilih kategori :")
+    i = 1
+    for kategori in Trans.Transaction.category:
+        print(f"{i}. {kategori}")
+        i += 1
+    pilihKategori = int(input())
+
+    for i in range(7):
+        if pilihKategori == i:
+            kategori = Trans.Transaction.category[i-1]
+            break
+
+    newTransaction = Trans.Transaction(date, 0, credit, 0, kategori)
     saveTransaction(newTransaction)
 
 def saveTransaction(transaction):
@@ -96,7 +108,7 @@ def saveTransaction(transaction):
     - Farrel Zandra - 231524007 - @quack22
     """
     with open('money.txt', 'a') as file:
-        file.write(f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome}\n")
+        file.write(f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n")
     print('Transaksi berhasil disimpan!')
     sortTransaction()
 
@@ -215,9 +227,10 @@ def readTransaction(file_name : str):
                 debit = int(data[1].strip())
                 credit = int(data[2].strip())
                 outcome = int(data[3].strip())
+                category = (data[4].strip())
                 
                 # Membuat objek Transaction dari data yang dibaca
-                newtransaction = Trans.Transaction(trans_date, debit, credit, outcome)
+                newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
                 transactions.append(newtransaction)
     except FileNotFoundError:
         print("File tidak ditemukan.")
@@ -245,7 +258,7 @@ def sortTransaction(file_name="money.txt"):
         # Simpan data yang telah diurutkan kembali ke file
         with open(file_name, 'w') as file:
             for transaction in sorted_transactions:
-                line = f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome}\n"
+                line = f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n"
                 file.write(line)
         print("Data berhasil diurutkan berdasarkan tanggal.")
     except Exception as e:
