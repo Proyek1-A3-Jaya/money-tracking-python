@@ -41,11 +41,11 @@ def recordCredit():
             print("Format tanggal tidak valid.")
             return
 
-    debit = int(input('Masukkan jumlah pemasukan: '))
+    credit = int(input('Masukkan jumlah pemasukan: '))
     last_outcome = getLastOutcome()
-    new_outcome = last_outcome - debit
+    new_outcome = last_outcome + credit
 
-    newTransaction = Trans.Transaction(date, debit, 0, new_outcome, "Uang Masuk")
+    newTransaction = Trans.Transaction(date, 0, credit, new_outcome, "Uang Masuk")
     saveTransaction(newTransaction)
 
 def recordDebit():
@@ -84,9 +84,9 @@ def recordDebit():
         except ValueError:
             print("Format tanggal tidak valid.")
             return
-    credit = int(input('Masukkan jumlah pengeluaran: '))
+    debit = int(input('Masukkan jumlah pengeluaran: '))
     last_outcome = getLastOutcome()
-    new_outcome = last_outcome + credit
+    new_outcome = last_outcome - debit
 
     print("pilih kategori :")
     i = 1
@@ -100,7 +100,7 @@ def recordDebit():
             kategori = Trans.Transaction.category[i-1]
             break
 
-    newTransaction = Trans.Transaction(date, 0, credit, new_outcome, kategori)
+    newTransaction = Trans.Transaction(date, debit, 0, new_outcome, kategori)
     saveTransaction(newTransaction)
 
 def saveTransaction(transaction):
