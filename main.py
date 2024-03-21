@@ -21,10 +21,6 @@ if __name__ == "__main__":
             # Handle login
             Menu.clearScreen()
             success = user.login()
-            # if success:
-            #     Menu.handleHomeMenu(user)
-            # else:
-            #     time.sleep(2)
             while not success:
                 time.sleep(2)
                 Menu.clearScreen()
