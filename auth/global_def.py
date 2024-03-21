@@ -7,13 +7,13 @@ class User:
     password: str
     fileName: str
 
-    def __innit__(self, name: str, username: str, password: str, fileName: str):
+    def __init__(self, name: str, username: str, password: str, fileName: str):
         self.name = name
         self.username = username
         self.password = password
         self.fileName = fileName
 
-    def register():
+    def register(self) -> bool:
         """
         Modul pendaftaran suatu akun
 
@@ -30,6 +30,8 @@ class User:
         if auth.isRegisterValid(username):
             print("Username sudah terdaftar")
             print("Mohon masukkan username yang berbeda")
+
+            return False
         else:
             password = input("Masukkan password anda: ")
             fileName = username + ".txt"
@@ -38,8 +40,9 @@ class User:
             )
 
         accFile.close()
+        return True
 
-    def login():
+    def login(self) -> bool:
         """
         Modul login suatu akun
 
@@ -67,5 +70,6 @@ class User:
             print(
                 "Username atau password salah\nMohon masukkan username / password yang benar"
             )
+        
         accFile.close()
-        return account
+        return log
