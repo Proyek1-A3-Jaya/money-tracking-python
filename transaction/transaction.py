@@ -10,7 +10,7 @@ def recordDebit():
     Author
     -----
     - Farrel Zandra - 231524007 - @quack22
-    - Satria Permata Sejati - 231524026 - @weirdokitten
+    - Satria Permata Sejati - 231524026 - @WeirdoKitten
     """
     # Input data transaksi berupa tanggal, debit, credit, dan outcome
     pilihTanggal = int(input
@@ -53,7 +53,7 @@ def recordCredit():
     Author
     ------
     - Farrel Zandra - 231524007 - @quack22
-    - Satria Permata Sejati - 231524026 - @weirdokitten
+    - Satria Permata Sejati - 231524026 - @WeirdoKitten
     """
     pilihTanggal = int(input
     ("""
@@ -98,6 +98,7 @@ def saveTransaction(transaction):
     with open('money.txt', 'a') as file:
         file.write(f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome}\n")
     print('Transaksi berhasil disimpan!')
+    sortTransaction()
 
 def showMonthlyRecap(year, month):
     """
@@ -223,4 +224,29 @@ def readTransaction(file_name : str):
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
 
-    return transactions        
+    return transactions
+
+def sortTransaction(file_name="money.txt"):
+    """
+    Mengurutkan data transaksi dalam file berdasarkan tanggal.
+
+    Author
+    ------
+    Satria Permata Sejati - 231524026 - @WeirdoKitten
+
+    """
+    try:
+        # Baca data transaksi menggunakan fungsi readTransaction
+        transactions = readTransaction(file_name)
+
+        # Urutkan data berdasarkan tanggal
+        sorted_transactions = sorted(transactions, key=lambda x: x.date)
+
+        # Simpan data yang telah diurutkan kembali ke file
+        with open(file_name, 'w') as file:
+            for transaction in sorted_transactions:
+                line = f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome}\n"
+                file.write(line)
+        print("Data berhasil diurutkan berdasarkan tanggal.")
+    except Exception as e:
+        print("Terjadi kesalahan saat mengurutkan data:", str(e))
