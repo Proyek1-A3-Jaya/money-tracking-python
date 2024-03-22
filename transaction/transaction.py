@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import transaction.global_def as Trans
 import calendar
-from datetime import datetime as dt
+import datetime as datetime
 from auth.global_def import User
 import os
 
