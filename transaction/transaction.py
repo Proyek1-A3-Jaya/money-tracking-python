@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import transaction.global_def as Trans
 import calendar
-import datetime
+from datetime import datetime as dt
 from auth.global_def import User
 import os
 
@@ -148,9 +148,6 @@ def showDailyRecap(user: User):
         ------
         - Farrel Zandra - 231524007 - @quack22
     """
-    year = int(input('Masukkan tahun (contoh: 2024): '))
-    month = int(input('Masukkan bulan (contoh: 1 untuk Januari): '))
-    day = int(input('Masukkan tanggal: '))
     totalDebit = 0
     totalCredit = 0
 
@@ -178,8 +175,8 @@ def showWeeklyRecap(year, month, user : User):
         - Farrel Zandra - 231524007 - @quack22
         """
     countDay = calendar.monthrange(year, month)[1]
-    startDate = datetime(year, month, 1)
-    endDate = datetime(year, month, countDay)
+    startDate = dt(year, month, 1)
+    endDate = dt(year, month, countDay)
 
     currentDate = startDate
     while currentDate <= endDate:
@@ -218,13 +215,9 @@ def readTransaction(user : User):
     Farras Ahmad Rasyid - 231524006 - @bamoebin
     
     Parameter:
-        file_name (str): Nama file yang berisi data transaksi.
-
-    Return:
-        list: Daftar transaksi yang dibaca dari file.
+        user : User: Nama file yang berisi data transaksi.
     """
     transactions = []
-
     try:
         with open(user.fileName, 'r') as file:
             for line in file:
@@ -234,18 +227,17 @@ def readTransaction(user : User):
                 credit = int(data[2].strip())
                 outcome = int(data[3].strip())
                 category = (data[4].strip())
+                print(f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nOutcome : {outcome}\n Category : {category}\n")
                 
                 # Membuat objek Transaction dari data yang dibaca
                 newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
                 transactions.append(newtransaction)
+            file.close()
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
 
-
-    file.close()
-    return transactions
 
 def sortTransaction(user : User):
     """
