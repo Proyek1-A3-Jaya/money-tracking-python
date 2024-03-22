@@ -15,12 +15,10 @@ def recordDebit(user : User):
     - Satria Permata Sejati - 231524026 - @WeirdoKitten
     """
     # Input data transaksi berupa tanggal, debit, credit, dan outcome
-    pilihTanggal = int(input
-    ("""
-        pilih tanggal :
-        1. hari ini
-        2. input manual
-    """))
+    print("==== Tanggal Transaksi ====")
+    print("1. Hari Ini")
+    print("2. Input Manual")
+    pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
         date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -59,12 +57,10 @@ def recordCredit(user : User):
     - Farrel Zandra - 231524007 - @quack22
     - Satria Permata Sejati - 231524026 - @WeirdoKitten
     """
-    pilihTanggal = int(input
-    ("""
-        pilih tanggal :
-        1. hari ini
-        2. input manual
-    """))
+    print("==== Tanggal Transaksi ====")
+    print("1. Hari Ini")
+    print("2. Input Manual")
+    pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
         date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
