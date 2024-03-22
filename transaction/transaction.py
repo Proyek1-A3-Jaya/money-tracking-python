@@ -142,6 +142,7 @@ def showMonthlyRecap(year, month, user : User):
     print(f"Rekap Bulan {month}/{year}:")
     print(f"Total Pemasukan {totalDebit}")
     print(f"Total Pengeluaran {totalCredit}")
+    file.close()
 
 def showDailyRecap(year, month, day, user : User):
     """
@@ -170,6 +171,7 @@ def showDailyRecap(year, month, day, user : User):
     print('-----------------------------------')
     print(f"Total Pemasukan: {totalDebit}")
     print(f"Total Pengeluaran: {totalCredit}")
+    file.close()
 
 def showWeeklyRecap(year, month, user : User):
     """
@@ -207,6 +209,7 @@ def showWeeklyRecap(year, month, user : User):
         print(f"Total Pemasukan  : Rp{totalDebit}")
         print(f"Total Pengeluaran  : Rp{totalCredit}")
         print()
+        file.close()
 
         currentDate = nextWeek + timedelta(days=1) # lompat ke minggu selanjutnya.
 
