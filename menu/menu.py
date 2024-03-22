@@ -1,8 +1,8 @@
 import os
 from auth import global_def
 from auth.global_def import User
-import transaction.transaction as tr
-
+import transaction.global_def as tr
+import time
 
 def clearScreen():
     """
@@ -135,31 +135,42 @@ def showRecapMenu():
 
 def handleHomeMenu(user: User):
     while True:
+        clearScreen()
         showHomeMenu()
         option, retError = getChoice("Masukkan pilihan: ")
 
         if retError:
             clearScreen()
             print("Input invalid, coba lagi...")
-            break
+            time.sleep(2)
+            continue
 
         if option == 1:
             clearScreen()
             showRecapMenu()
-            break
         elif option == 2:
             clearScreen()
             tr.readTransaction()
-            break
         elif option == 3:
             print("")
-            break
         elif option == 4:
+            clearScreen()
             showTransactionMenu()
-            break
+            choice, err = getChoice("Pilih: ")
+            if err:
+                continue 
+
+            if choice == 1:
+                tr.recordDebit()
+            elif choice == 2:
+                tr.recordCredit()
+            else:
+                print("Input invalid...")
+                time.sleep(2)
+                continue
         elif option == 5:
-            showMainMenu()
             break
         else:
-            showHomeMenu()
-            break
+            print("Input invalid...")
+            time.sleep(2)
+            continue

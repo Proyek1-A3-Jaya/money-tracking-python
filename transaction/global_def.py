@@ -1,5 +1,6 @@
 from datetime import date
 from auth.global_def import User
+import transaction.transaction as tr
 
 class Transaction():
     date
@@ -18,4 +19,8 @@ class Transaction():
     def tampilTransaksi(self):
         print(f"{self.date} | {self.debit} | {self.credit} | {self.outcome}")
 
-# def showTransactions():
+def recordDebit():
+    tr.recordDebit()
+
+def recordCredit():
+    tr.recordCredit()
