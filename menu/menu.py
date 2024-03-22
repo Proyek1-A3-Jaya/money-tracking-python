@@ -49,6 +49,19 @@ def getChoice(message: str) -> (int, bool):
 
     return int(choice), False
 
+def showInvalidInputMessage():
+    """
+    Menampilkan pesan jika input yang diterima oleh getChoice invalid
+
+    Author
+    ------
+    - Yobel El'Roy Doloksaribu - 231524029 - @k31p
+    """
+    
+    clearScreen()
+    print("Pilihan tidak valid, coba lagi...")
+    time.sleep(2)
+
 
 def showMainMenu():
     """
