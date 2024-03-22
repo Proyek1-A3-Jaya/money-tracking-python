@@ -69,7 +69,7 @@ class User:
         for account in accFile:
             account = account.split("#")
             if account[1] == username and account[2] == password:
-                print("Login succes!!")
+                print("Login success!!")
                 print(f"Welcome {account[0]}")
                 log = True
                 self.name = account[0]

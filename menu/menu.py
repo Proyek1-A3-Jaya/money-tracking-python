@@ -160,8 +160,8 @@ def handleHomeMenu(user: User):
                 day = int(input('Masukkan tanggal: '))
                 tr.showDailyRecap(year=year, month=month, day=day, user=user)
             elif choice == 2:
-                year = input("Masukkan tahun (Format: YYYY): ")
-                month = input("Masukkan bulan (Format: MM): ")
+                year = int(input("Masukkan tahun (Format: YYYY): "))
+                month = int(input("Masukkan bulan (Format: MM): "))
                 tr.showWeeklyRecap(year, month, user)
             elif choice == 3:
                 year = input("Masukkan tahun (Format: YYYY): ")
