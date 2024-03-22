@@ -153,9 +153,7 @@ def handleHomeMenu(user: User):
         option, retError = getChoice("Masukkan pilihan: ")
 
         if retError:
-            clearScreen()
-            print("Input invalid, coba lagi...")
-            time.sleep(2)
+            showInvalidInputMessage()
             continue
 
         if option == 1:
@@ -163,40 +161,35 @@ def handleHomeMenu(user: User):
             showRecapMenu()
             choice, err = getChoice("Pilih: ")
             if err:
-                print("Input invalid")
-                time.sleep(2)
+                showInvalidInputMessage()
                 continue 
 
             if choice == 1:
-                year = input("Masukkan tahun (Format: YYYY): ")
-                month = input("Masukkan bulan (Format: MM): ")
-                day = input("Masukkan hari (Format: DD): ")
-                tr.showDailyRecap(year, month, day, user)
+                tr.showDailyRecap(user)
+                input("Tekan enter untuk melanjutkan...")
             elif choice == 2:
                 year = input("Masukkan tahun (Format: YYYY): ")
                 month = input("Masukkan bulan (Format: MM): ")
                 tr.showWeeklyRecap(year, month, user)
+                input("Tekan enter untuk melanjutkan...")
             elif choice == 3:
-                year = input("Masukkan tahun (Format: YYYY): ")
-                month = input("Masukkan tahun (Format: YYYY): ")
-                tr.showMonthlyRecap(year, month, user)
+                tr.showMonthlyRecap(user)
+                input("Tekan enter untuk melanjutkan...")
             else:
-                print("Input invalid...")
-                time.sleep(2)
+                showInvalidInputMessage()
                 continue
         elif option == 2:
-            clearScreen()
-            tr.readTransaction(user)
-            input("Press any key to continue...")
+            # Implementasi lihat riwayat transaksi
+            pass
         elif option == 3:
-            print("")
+            # Implementasi lihat riwayat terbaru + informasi tentang tabungan user
+            pass
         elif option == 4:
             clearScreen()
             showTransactionMenu()
             choice, err = getChoice("Pilih: ")
             if err:
-                print("Input invalid")
-                time.sleep(2)
+                showInvalidInputMessage()
                 continue 
 
             if choice == 1:
@@ -204,12 +197,10 @@ def handleHomeMenu(user: User):
             elif choice == 2:
                 tr.recordCredit(user)
             else:
-                print("Input invalid...")
-                time.sleep(2)
+                showInvalidInputMessage()
                 continue
         elif option == 5:
             break
         else:
-            print("Input invalid...")
-            time.sleep(2)
+            showInvalidInputMessage()
             continue
