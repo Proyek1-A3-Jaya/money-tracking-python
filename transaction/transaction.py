@@ -226,9 +226,7 @@ def readTransaction(user : User):
                 debit = int(data[1].strip())
                 credit = int(data[2].strip())
                 outcome = int(data[3].strip())
-                category = (data[4].strip())
-                print(f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nOutcome : {outcome}\n Category : {category}\n")
-                
+                category = (data[4].strip())                
                 # Membuat objek Transaction dari data yang dibaca
                 newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
                 transactions.append(newtransaction)
@@ -250,7 +248,7 @@ def sortTransaction(user : User):
     """
     try:
         # Baca data transaksi menggunakan fungsi readTransaction
-        transactions = readTransaction(user.fileName)
+        transactions = readTransaction(user)
 
         # Urutkan data berdasarkan tanggal
         sorted_transactions = sorted(transactions, key=lambda x: x.date)
@@ -261,9 +259,11 @@ def sortTransaction(user : User):
                 line = f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n"
                 file.write(line)
         print("Data berhasil diurutkan berdasarkan tanggal.")
+        input("Tekan enter untuk melanjutkan...")
         file.close()
     except Exception as e:
         print("Terjadi kesalahan saat mengurutkan data:", str(e))
+        input("Tekan enter untuk melanjutkan...")
 
 def getLastOutcome(user : User):
     """
