@@ -233,11 +233,11 @@ def readTransaction(user : User):
                 newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
                 transactions.append(newtransaction)
             file.close()
+            return transactions
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
-
 
 def sortTransaction(user : User):
     """
