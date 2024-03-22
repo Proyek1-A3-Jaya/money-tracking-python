@@ -33,3 +33,6 @@ def showWeeklyRecap(year, month, user : User):
 
 def showDailyRecap(year, month, day, user : User):
     tr.showDailyRecap(year, month, day, user)
+
+def readTransaction(user: User):
+    tr.readTransaction(user)

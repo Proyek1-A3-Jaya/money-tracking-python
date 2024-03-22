@@ -148,9 +148,33 @@ def handleHomeMenu(user: User):
         if option == 1:
             clearScreen()
             showRecapMenu()
+            choice, err = getChoice("Pilih: ")
+            if err:
+                print("Input invalid")
+                time.sleep(2)
+                continue 
+
+            if choice == 1:
+                year = input("Masukkan tahun (Format: YYYY): ")
+                month = input("Masukkan bulan (Format: MM): ")
+                day = input("Masukkan hari (Format: DD): ")
+                tr.showDailyRecap(year, month, day, user)
+            elif choice == 2:
+                year = input("Masukkan tahun (Format: YYYY): ")
+                month = input("Masukkan bulan (Format: MM): ")
+                tr.showWeeklyRecap(year, month, user)
+            elif choice == 3:
+                year = input("Masukkan tahun (Format: YYYY): ")
+                month = input("Masukkan tahun (Format: YYYY): ")
+                tr.showMonthlyRecap(year, month, user)
+            else:
+                print("Input invalid...")
+                time.sleep(2)
+                continue
         elif option == 2:
             clearScreen()
-            tr.readTransaction()
+            tr.readTransaction(user)
+            input("Press any key to continue...")
         elif option == 3:
             print("")
         elif option == 4:
@@ -158,6 +182,8 @@ def handleHomeMenu(user: User):
             showTransactionMenu()
             choice, err = getChoice("Pilih: ")
             if err:
+                print("Input invalid")
+                time.sleep(2)
                 continue 
 
             if choice == 1:
