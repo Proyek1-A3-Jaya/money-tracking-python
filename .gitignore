@@ -165,3 +165,6 @@ main_test.py
 # Ignore files
 dataAkun.bin
 money.txt
+
+# Ignore data file contents
+data/*.txt

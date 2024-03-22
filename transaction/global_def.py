@@ -25,14 +25,14 @@ def recordDebit(user: User):
 def recordCredit(user: User):
     tr.recordCredit(user)
 
-def showMonthlyRecap(year, month, user : User):
-    tr.showMonthlyRecap(year, month, user)
+def showMonthlyRecap(user: User):
+    tr.showMonthlyRecap(user)
 
 def showWeeklyRecap(year, month, user : User):
     tr.showWeeklyRecap(year, month, user)
 
-def showDailyRecap(year, month, day, user : User):
-    tr.showDailyRecap(year, month, day, user)
+def showDailyRecap(user: User):
+    tr.showDailyRecap(user)
 
 def readTransaction(user: User):
     tr.readTransaction(user)

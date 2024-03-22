@@ -38,7 +38,7 @@ class User:
             return False
         else:
             password = input("Masukkan password anda: ")
-            fileName = username + ".txt"
+            fileName = "data/" + username + ".txt"
             accFile.write(
                 name + "#" + username + "#" + password + "#" + fileName + "#\n"
             )
