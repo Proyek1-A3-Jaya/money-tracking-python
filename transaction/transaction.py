@@ -119,7 +119,7 @@ def saveTransaction(transaction, user : User):
     print('Transaksi berhasil disimpan!')
     sortTransaction(user)
 
-def showMonthlyRecap(year, month, user : User):
+def showMonthlyRecap(user: User):
     """
     Menampilkan rekap transaksi bulanan.
 
@@ -144,7 +144,7 @@ def showMonthlyRecap(year, month, user : User):
     print(f"Total Pengeluaran {totalCredit}")
     file.close()
 
-def showDailyRecap(year, month, day, user : User):
+def showDailyRecap(user: User):
     """
         Menampilkan rekap transaksi bulanan.
 
