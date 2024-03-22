@@ -40,7 +40,7 @@ class User:
             password = input("Masukkan password anda: ")
             fileName = username + ".txt"
             accFile.write(
-                name + "#" + username + "#" + password + "#" + fileName + "\n"
+                name + "#" + username + "#" + password + "#" + fileName
             )
 
         accFile.close()
@@ -72,6 +72,10 @@ class User:
                 print("Login succes!!")
                 print(f"Welcome {account[0]}")
                 log = True
+                self.name = account[0]
+                self.username = account[1]
+                self.password = account[2]
+                self.fileName = account[3]
                 break
 
         if not log:
