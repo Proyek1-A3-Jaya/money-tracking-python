@@ -1,5 +1,4 @@
 import auth.global_def as Auth
-import transaction.transaction as Tr
 import menu.menu as Menu
 import time
 
@@ -12,9 +11,7 @@ if __name__ == "__main__":
         option, retError = Menu.getChoice("Masukkan pilihan: ")
 
         if retError:
-            Menu.clearScreen()
-            print("Pilihan tidak valid, coba lagi...")
-            time.sleep(2)
+            Menu.showInvalidInputMessage()
             continue
 
         if option == 1:
@@ -26,10 +23,9 @@ if __name__ == "__main__":
                 Menu.clearScreen()
                 success = user.login()
 
-            time.sleep(3)
+            time.sleep(2)
             Menu.clearScreen()
             Menu.handleHomeMenu(user)
-            break
         elif option == 2:
             # Handle registrasi
             Menu.clearScreen()
@@ -39,7 +35,6 @@ if __name__ == "__main__":
                 time.sleep(2)
                 Menu.clearScreen()
                 success = user.register()
-            break
         elif option == 3:
             print("Selamat tinggal...")
             break
