@@ -222,13 +222,9 @@ def readTransaction(user : User):
     Farras Ahmad Rasyid - 231524006 - @bamoebin
     
     Parameter:
-        file_name (str): Nama file yang berisi data transaksi.
-
-    Return:
-        list: Daftar transaksi yang dibaca dari file.
+        user : User: Nama file yang berisi data transaksi.
     """
     transactions = []
-
     try:
         with open(user.fileName, 'r') as file:
             for line in file:
@@ -238,18 +234,17 @@ def readTransaction(user : User):
                 credit = int(data[2].strip())
                 outcome = int(data[3].strip())
                 category = (data[4].strip())
+                print(f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nOutcome : {outcome}\n Category : {category}\n")
                 
                 # Membuat objek Transaction dari data yang dibaca
                 newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
                 transactions.append(newtransaction)
+            file.close()
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
 
-
-    file.close()
-    return transactions
 
 def sortTransaction(user : User):
     """
