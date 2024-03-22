@@ -294,8 +294,8 @@ def getLastOutcome(user : User):
                 last_outcome = int(data[3].strip())  # Ambil nilai outcome terakhir dari baris terakhir
             else:
                 last_outcome = 0  # Jika file kosong, maka outcome terakhir adalah 0
+            file.close()
     except FileNotFoundError:
         print("File tidak ditemukan.")
         last_outcome = 0
-    file.close()
     return last_outcome

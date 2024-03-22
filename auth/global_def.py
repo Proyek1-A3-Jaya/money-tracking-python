@@ -40,7 +40,7 @@ class User:
             password = input("Masukkan password anda: ")
             fileName = username + ".txt"
             accFile.write(
-                name + "#" + username + "#" + password + "#" + fileName
+                name + "#" + username + "#" + password + "#" + fileName + "#\n"
             )
 
         accFile.close()
