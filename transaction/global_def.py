@@ -19,8 +19,17 @@ class Transaction():
     def tampilTransaksi(self):
         print(f"{self.date} | {self.debit} | {self.credit} | {self.outcome}")
 
-def recordDebit():
-    tr.recordDebit()
+def recordDebit(user: User):
+    tr.recordDebit(user)
 
-def recordCredit():
-    tr.recordCredit()
+def recordCredit(user: User):
+    tr.recordCredit(user)
+
+def showMonthlyRecap(year, month, user : User):
+    tr.showMonthlyRecap(year, month, user)
+
+def showWeeklyRecap(year, month, user : User):
+    tr.showWeeklyRecap(year, month, user)
+
+def showDailyRecap(year, month, day, user : User):
+    tr.showDailyRecap(year, month, day, user)

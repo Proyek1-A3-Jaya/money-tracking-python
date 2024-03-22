@@ -161,9 +161,9 @@ def handleHomeMenu(user: User):
                 continue 
 
             if choice == 1:
-                tr.recordDebit()
+                tr.recordDebit(user)
             elif choice == 2:
-                tr.recordCredit()
+                tr.recordCredit(user)
             else:
                 print("Input invalid...")
                 time.sleep(2)
