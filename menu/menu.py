@@ -4,6 +4,7 @@ from auth.global_def import User
 import transaction.global_def as tr
 import time
 
+
 def clearScreen():
     """
     Menghapus teks dari terminal
@@ -49,6 +50,7 @@ def getChoice(message: str) -> (int, bool):
 
     return int(choice), False
 
+
 def showInvalidInputMessage():
     """
     Menampilkan pesan jika input yang diterima oleh getChoice invalid
@@ -57,7 +59,7 @@ def showInvalidInputMessage():
     ------
     - Yobel El'Roy Doloksaribu - 231524029 - @k31p
     """
-    
+
     clearScreen()
     print("Pilihan tidak valid, coba lagi...")
     time.sleep(2)
@@ -162,15 +164,13 @@ def handleHomeMenu(user: User):
             choice, err = getChoice("Pilih: ")
             if err:
                 showInvalidInputMessage()
-                continue 
+                continue
 
             if choice == 1:
                 tr.showDailyRecap(user)
                 input("Tekan enter untuk melanjutkan...")
             elif choice == 2:
-                year = input("Masukkan tahun (Format: YYYY): ")
-                month = input("Masukkan bulan (Format: MM): ")
-                tr.showWeeklyRecap(year, month, user)
+                tr.showWeeklyRecap(user)
                 input("Tekan enter untuk melanjutkan...")
             elif choice == 3:
                 tr.showMonthlyRecap(user)
@@ -190,7 +190,7 @@ def handleHomeMenu(user: User):
             choice, err = getChoice("Pilih: ")
             if err:
                 showInvalidInputMessage()
-                continue 
+                continue
 
             if choice == 1:
                 tr.recordDebit(user)
