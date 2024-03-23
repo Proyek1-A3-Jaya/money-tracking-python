@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import transaction.global_def as Trans
 import calendar
-import datetime as datetime
+from datetime import datetime as dt
 from auth.global_def import User
 import os
 import time
@@ -336,3 +336,49 @@ def lastTransaction(user : User):
         print("File tidak ditemukan.")
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
+
+
+def calculateNominal(total, targetDate, frequency):
+    currentDate = dt.now()
+    if targetDate:
+        targetDate = dt.strptime(targetDate, "%Y-%m-%d")
+    else:
+        targetDate = currentDate + timedelta(days=365)
+
+    if frequency.lower() == "tahun":
+        nominal = total / (targetDate.year - currentDate.year)
+    elif frequency.lower() == "bulan":
+        monthsDiff = (targetDate.year - currentDate.year) * 12 + (targetDate.month - currentDate.month)
+        nominal = total - monthsDiff
+    elif frequency.lower() == "minggu":
+        weeksDiff = (targetDate - currentDate).days // 7
+        nominal = total / weeksDiff
+    elif frequency.lower() == "hari":
+        daysDiff = (targetDate - currentDate).days
+        nominal = total / daysDiff
+    else:
+        print("Frekuensi yang dimasukkan tidak valid!")
+        return
+
+    print(f"\nNominal yang harus ditabung per {frequency}: Rp{nominal}")
+
+
+def createGoal():
+    print("=== Buat Tujuan Keunganmu ===")
+    goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
+    total = int(input("Berapa total uang yang ingin kamu tabung\nInput: Rp"))
+
+    print("\n=== Pilih Target Keuanganmu ===")
+    print("1. Custom tanggal")
+    print("2. Fleksibel")
+    choice = input("Pilih opsi (1/2): ")
+
+    if choice == '1':
+        targetDate = input("Masukkan tanggal (YYYY-MM-DD): ")
+        frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
+        calculateNominal(total, targetDate, frequency)
+    elif choice == '2':
+        frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
+        calculateNominal(total, None, frequency)
+
+

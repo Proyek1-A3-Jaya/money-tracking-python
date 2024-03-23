@@ -42,3 +42,6 @@ def printTransactions(user: User):
 
 def lastTransaction(user : User):
     tr.lastTransaction(user)
+
+def createGoal():
+    tr.createGoal()

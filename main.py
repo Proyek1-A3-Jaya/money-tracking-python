@@ -27,7 +27,7 @@ if __name__ == "__main__":
             time.sleep(2)
             Menu.clearScreen()
             Menu.handleHomeMenu(user)
-            continue    
+            continue
         elif option == 2:
             # Handle registrasi
             Menu.clearScreen()
@@ -37,10 +37,12 @@ if __name__ == "__main__":
                 time.sleep(2)
                 Menu.clearScreen()
                 success = user.register()
-            continue        
+            continue
         elif option == 3:
             print("Selamat tinggal...")
             break
         else:
             print("Pilihan tidak ada, coba lagi...")
             time.sleep(2)
+    # testing fitur target
+    # tr.createGoal()
