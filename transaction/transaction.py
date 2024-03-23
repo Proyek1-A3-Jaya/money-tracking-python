@@ -174,7 +174,7 @@ def showWeeklyRecap(year, month, user : User):
         Author
         ------
         - Farrel Zandra - 231524007 - @quack22
-        """
+    """
     countDay = calendar.monthrange(year, month)[1]
     startDate = dt(year, month, 1)
     endDate = dt(year, month, countDay)
@@ -339,9 +339,26 @@ def lastTransaction(user : User):
 
 
 def calculateNominal(total, targetDate, frequency):
+    """
+        Menghitung nominal yang harus ditabung oleh pengguna per frekuensi waktunya.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+
+        Parameter
+        ---------
+        :param total
+        :param targetDate
+        :param frequency
+    """
     currentDate = dt.now()
     if targetDate:
         targetDate = dt.strptime(targetDate, "%Y-%m-%d")
+        if targetDate < currentDate:
+            print("Tanggal target tidak boleh kurang dari tanggal hari ini! Ulangi input...")
+            print()
+            return createGoal()
     else:
         targetDate = currentDate + timedelta(days=365)
 
@@ -361,9 +378,23 @@ def calculateNominal(total, targetDate, frequency):
         return
 
     print(f"\nNominal yang harus ditabung per {frequency}: Rp{nominal}")
+    print()
 
 
 def calculateTargetDate(total, frequency, nominal):
+    """
+        Menghitung tanggal yang memungkinkan sebagai target apabila pengguna memilih rentang waktu fleksibel.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+
+        Parameter
+        ---------
+        :param total
+        :param frequency
+        :param nominal
+    """
     currentDate = dt.now()
     if frequency.lower() == "tahun":
         targetDate = currentDate + timedelta(days=365 * (total / nominal))
@@ -379,8 +410,36 @@ def calculateTargetDate(total, frequency, nominal):
 
     print(f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
 
+
+def isValidDate(date_str):
+    """
+        Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+
+        Parameter
+        ---------
+        :param date_str
+    """
+    try:
+        dt.strptime(date_str, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
 def createGoal():
-    print("=== Buat Tujuan Keunganmu ===")
+    """
+        Menampilkan halaman untuk membuat tujuan dan target menabung.
+
+        Author
+        ------
+        - Farrel Zandra - 231524007 - @quack22
+
+        no param
+    """
+    print("=== Buat Tujuan Keuanganmu ===")
     goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
     total = int(input("Berapa total uang yang ingin kamu tabung\nInput: Rp"))
 
@@ -391,11 +450,14 @@ def createGoal():
 
     if choice == '1':
         targetDate = input("Masukkan tanggal (YYYY-MM-DD): ")
-        frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
-        calculateNominal(total, targetDate, frequency)
+        if isValidDate(targetDate):
+            frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
+            calculateNominal(total, targetDate, frequency)
+        else:
+            print("Format tanggal tidak valid! Ulangi input...")
+            print()
+            createGoal()
     elif choice == '2':
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
         nominal = int(input("Nominal (Rp): "))
         calculateTargetDate(total, frequency, nominal)
-
-
