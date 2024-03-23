@@ -4,6 +4,7 @@ import calendar
 import datetime as datetime
 from auth.global_def import User
 import os
+import time
 
 def recordDebit(user : User):
     """
@@ -220,18 +221,24 @@ def readTransaction(user : User):
     transactions = []
     try:
         with open(user.fileName, 'r') as file:
-            for line in file:
-                data = line.strip().split('|')
-                trans_date = data[0].strip()
-                debit = int(data[1].strip())
-                credit = int(data[2].strip())
-                outcome = int(data[3].strip())
-                category = (data[4].strip())                
-                # Membuat objek Transaction dari data yang dibaca
-                newtransaction = Trans.Transaction(trans_date, debit, credit, outcome, category)
-                transactions.append(newtransaction)
-            file.close()
-            return transactions
+            first_line = file.readline().strip()
+            # Memeriksa apakah baris pertama tidak kosong
+            if first_line:
+                file.seek(0)  # Kembalikan posisi file ke awal
+                for line in file:
+                    data = line.strip().split('|')
+                    trans_date = data[0].strip()
+                    debit = int(data[1].strip())
+                    credit = int(data[2].strip())
+                    outcome = int(data[3].strip())
+                    category = (data[4].strip())                
+                    # Membuat objek Transaction dari data yang dibaca
+                    newtransaction = Trans.Transaction(trans_date, debit, credit, outcome,  category)
+                    transactions.append(newtransaction)
+                file.close()
+                return transactions
+            else:
+                print("Data Kosong")
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
@@ -287,3 +294,45 @@ def getLastOutcome(user : User):
         print("File tidak ditemukan.")
         last_outcome = 0
     return last_outcome
+
+def printTransactions(user):
+    """
+    Mencetak informasi transaksi untuk user.
+
+    Author
+    ------
+    Farras Ahmad Rasyid - 231524006 - @bamoebin
+    
+    Parameter:
+        user : User: Pengguna
+    """
+    transactions = readTransaction(user)
+    if transactions:
+        print(f"Transaksi untuk pengguna {user.name}:")
+        for transaction in transactions:
+            print("=========================")
+            print(f"Tanggal\t: {transaction.date}")
+            print(f"Debit\t: {transaction.debit}")
+            print(f"Credit\t: {transaction.credit}")
+            print(f"Outcome\t: {transaction.outcome}")
+            print(f"Category\t: {transaction.category}")
+            print()
+    else:
+        print("Tidak ada transaksi untuk pengguna", user.name)
+
+def lastTransaction(user : User):
+    try:
+        with open(user.fileName, 'r') as file:
+            lines = file.readlines()
+            last_line = lines[-1].strip()
+            data = last_line.split('|')
+            trans_date = data[0].strip()
+            debit = int(data[1].strip())
+            credit = int(data[2].strip())
+            outcome = int(data[3].strip())
+            category = (data[4].strip())
+            print(f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nCategory : {category}\nRemains : {outcome}\n")
+    except FileNotFoundError:
+        print("File tidak ditemukan.")
+    except Exception as e:
+        print("Terjadi kesalahan saat membaca file:", str(e))

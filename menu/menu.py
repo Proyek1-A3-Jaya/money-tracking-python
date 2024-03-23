@@ -181,11 +181,11 @@ def handleHomeMenu(user: User):
                 showInvalidInputMessage()
                 continue
         elif option == 2:
-            tr.readTransaction(user)
+            tr.printTransactions(user)
             input("Tekan enter untuk melanjutkan...")
         elif option == 3:
-            # Implementasi lihat riwayat terbaru + informasi tentang tabungan user
-            pass
+            tr.lastTransaction(user)
+            input("Tekan enter untuk melanjutkan...")
         elif option == 4:
             clearScreen()
             showTransactionMenu()
