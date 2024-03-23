@@ -22,7 +22,7 @@ def recordDebit(user : User):
     pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
-        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if pilihTanggal == 2:
         # Meminta pengguna memasukkan tanggal secara manual satu per satu
         year = input("Masukkan tahun (Format: YYYY): ")
@@ -30,14 +30,14 @@ def recordDebit(user : User):
         day = input("Masukkan hari (Format: DD): ")
 
         # Mengambil jam, menit, dan detik dari waktu sekarang
-        current_time = datetime.datetime.now()
+        current_time = datetime.now()
         hour = current_time.strftime("%H")
         minute = current_time.strftime("%M")
         second = current_time.strftime("%S")
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+            date = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
         except ValueError:
             print("Format tanggal tidak valid.")
             return
@@ -64,7 +64,7 @@ def recordCredit(user : User):
     pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
-        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if pilihTanggal == 2:
         # Meminta pengguna memasukkan tanggal secara manual satu per satu
         year = input("Masukkan tahun (Format: YYYY): ")
@@ -72,14 +72,14 @@ def recordCredit(user : User):
         day = input("Masukkan hari (Format: DD): ")
 
         # Mengambil jam, menit, dan detik dari waktu sekarang
-        current_time = datetime.datetime.now()
+        current_time = datetime.now()
         hour = current_time.strftime("%H")
         minute = current_time.strftime("%M")
         second = current_time.strftime("%S")
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+            date = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
         except ValueError:
             print("Format tanggal tidak valid.")
             return
