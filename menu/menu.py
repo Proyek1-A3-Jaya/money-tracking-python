@@ -102,7 +102,8 @@ def showHomeMenu():
     print("|                2. Lihat Riwayat Transaksi            |")
     print("|                3. Lihat Saldo & Mutasi Terakhir      |")
     print("|                4. Catat Keuangan                     |")
-    print("|                5. Log Out                            |")
+    print("|                5. Nabung Yuk!                        |")
+    print("|                6. Log Out                            |")
     print("|                                                      |")
     print("|______________________________________________________|")
 
@@ -202,6 +203,9 @@ def handleHomeMenu(user: User):
                 showInvalidInputMessage()
                 continue
         elif option == 5:
+            clearScreen()
+            tr.createGoal()
+        elif option == 6:
             break
         else:
             showInvalidInputMessage()

@@ -44,5 +44,3 @@ if __name__ == "__main__":
         else:
             print("Pilihan tidak ada, coba lagi...")
             time.sleep(2)
-    # testing fitur target
-    # tr.createGoal()
