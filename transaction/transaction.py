@@ -278,7 +278,7 @@ def showWeeklyRecap(user: User):
         with open(user.fileName, "r") as file:
             for line in file:
                 data = line.split("|")
-                transDate = datetime.datetime.strptime(
+                transDate = datetime.strptime(
                     data[0].strip(), "%Y-%m-%d %H:%M:%S"
                 )
                 if currentDate <= transDate <= nextWeek:
