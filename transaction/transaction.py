@@ -363,6 +363,22 @@ def calculateNominal(total, targetDate, frequency):
     print(f"\nNominal yang harus ditabung per {frequency}: Rp{nominal}")
 
 
+def calculateTargetDate(total, frequency, nominal):
+    currentDate = dt.now()
+    if frequency.lower() == "tahun":
+        targetDate = currentDate + timedelta(days=365 * (total / nominal))
+    elif frequency.lower() == "bulan":
+        targetDate = currentDate + timedelta(days=30 * (total / nominal))
+    elif frequency.lower() == "minggu":
+        targetDate = currentDate + timedelta(days=7 * (total / nominal))
+    elif frequency.lower() == "hari":
+        targetDate = currentDate + timedelta(days=(total / nominal))
+    else:
+        print("Frekuensi tidak valid!")
+        return
+
+    print(f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
+
 def createGoal():
     print("=== Buat Tujuan Keunganmu ===")
     goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
@@ -379,6 +395,7 @@ def createGoal():
         calculateNominal(total, targetDate, frequency)
     elif choice == '2':
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
-        calculateNominal(total, None, frequency)
+        nominal = int(input("Nominal (Rp): "))
+        calculateTargetDate(total, frequency, nominal)
 
 
