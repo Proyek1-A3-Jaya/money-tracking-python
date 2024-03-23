@@ -342,6 +342,10 @@ def calculateNominal(total, targetDate, frequency):
     currentDate = dt.now()
     if targetDate:
         targetDate = dt.strptime(targetDate, "%Y-%m-%d")
+        if targetDate < currentDate:
+            print("Tanggal target tidak boleh kurang dari tanggal hari ini! Ulangi input...")
+            print()
+            return createGoal()
     else:
         targetDate = currentDate + timedelta(days=365)
 
@@ -379,6 +383,14 @@ def calculateTargetDate(total, frequency, nominal):
 
     print(f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
 
+
+def isValidDate(date_str):
+    try:
+        dt.strptime(date_str, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
 def createGoal():
     print("=== Buat Tujuan Keunganmu ===")
     goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
@@ -391,11 +403,14 @@ def createGoal():
 
     if choice == '1':
         targetDate = input("Masukkan tanggal (YYYY-MM-DD): ")
-        frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
-        calculateNominal(total, targetDate, frequency)
+        if isValidDate(targetDate):
+            frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
+            calculateNominal(total, targetDate, frequency)
+        else:
+            print("Format tanggal tidak valid! Ulangi input...")
+            print()
+            createGoal()
     elif choice == '2':
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
         nominal = int(input("Nominal (Rp): "))
         calculateTargetDate(total, frequency, nominal)
-
-
