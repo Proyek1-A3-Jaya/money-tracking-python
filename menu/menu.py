@@ -205,6 +205,7 @@ def handleHomeMenu(user: User):
         elif option == 5:
             clearScreen()
             tr.createGoal()
+            clearScreen()
         elif option == 6:
             break
         else:

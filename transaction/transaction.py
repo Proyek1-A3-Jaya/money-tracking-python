@@ -3,6 +3,7 @@ import transaction.global_def as Trans
 import calendar
 from datetime import datetime as dt
 from auth.global_def import User
+from menu import menu as Mn
 import os
 import time
 
@@ -408,7 +409,7 @@ def calculateTargetDate(total, frequency, nominal):
         print("Frekuensi tidak valid!")
         return
 
-    print(f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
+    print(f"\nDengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
 
 
 def isValidDate(date_str):
@@ -439,13 +440,13 @@ def createGoal():
 
         no param
     """
-    print("=== Buat Tujuan Keuanganmu ===")
-    goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
-    total = int(input("Berapa total uang yang ingin kamu tabung\nInput: Rp"))
+    print("\n=== Buat Tujuan Keuanganmu ===")
+    goal = input("| Halo, apa tujuan keuanganmu? | \nBeri tahu kami: ")
+    total = int(input("| Berapa total uang yang ingin kamu tabung |\nInput: (Rp) "))
 
     print("\n=== Pilih Target Keuanganmu ===")
-    print("1. Custom tanggal")
-    print("2. Fleksibel")
+    print("| 1. Custom tanggal |")
+    print("| 2. Fleksibel      |")
     choice = input("Pilih opsi (1/2): ")
 
     if choice == '1':
@@ -456,8 +457,11 @@ def createGoal():
         else:
             print("Format tanggal tidak valid! Ulangi input...")
             print()
-            createGoal()
+
+        input("Ketik 1 untuk kembali ke halaman utama: ")
     elif choice == '2':
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
         nominal = int(input("Nominal (Rp): "))
         calculateTargetDate(total, frequency, nominal)
+
+        input("Ketik 1 untuk kembali ke halaman utama: ")
