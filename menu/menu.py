@@ -165,11 +165,13 @@ def handleHomeMenu(user: User):
                 continue 
 
             if choice == 1:
-                tr.showDailyRecap(user)
-                input("Tekan enter untuk melanjutkan...")
+                year = int(input('Masukkan tahun (contoh: 2024): '))
+                month = int(input('Masukkan bulan (contoh: 1 untuk Januari): '))
+                day = int(input('Masukkan tanggal: '))
+                tr.showDailyRecap(year=year, month=month, day=day, user=user)
             elif choice == 2:
-                year = input("Masukkan tahun (Format: YYYY): ")
-                month = input("Masukkan bulan (Format: MM): ")
+                year = int(input("Masukkan tahun (Format: YYYY): "))
+                month = int(input("Masukkan bulan (Format: MM): "))
                 tr.showWeeklyRecap(year, month, user)
                 input("Tekan enter untuk melanjutkan...")
             elif choice == 3:
@@ -179,11 +181,11 @@ def handleHomeMenu(user: User):
                 showInvalidInputMessage()
                 continue
         elif option == 2:
-            # Implementasi lihat riwayat transaksi
-            pass
+            tr.printTransactions(user)
+            input("Tekan enter untuk melanjutkan...")
         elif option == 3:
-            # Implementasi lihat riwayat terbaru + informasi tentang tabungan user
-            pass
+            tr.lastTransaction(user)
+            input("Tekan enter untuk melanjutkan...")
         elif option == 4:
             clearScreen()
             showTransactionMenu()

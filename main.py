@@ -1,5 +1,6 @@
 import auth.global_def as Auth
 import menu.menu as Menu
+import transaction.global_def as tr
 import time
 
 if __name__ == "__main__":
@@ -26,6 +27,7 @@ if __name__ == "__main__":
             time.sleep(2)
             Menu.clearScreen()
             Menu.handleHomeMenu(user)
+            continue
         elif option == 2:
             # Handle registrasi
             Menu.clearScreen()
@@ -35,9 +37,12 @@ if __name__ == "__main__":
                 time.sleep(2)
                 Menu.clearScreen()
                 success = user.register()
+            continue
         elif option == 3:
             print("Selamat tinggal...")
             break
         else:
             print("Pilihan tidak ada, coba lagi...")
             time.sleep(2)
+    # testing fitur target
+    # tr.createGoal()
