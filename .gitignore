@@ -168,3 +168,4 @@ money.txt
 
 # Ignore data file contents
 data/*.txt
+.vscode/
