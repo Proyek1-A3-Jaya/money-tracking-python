@@ -6,7 +6,8 @@ from auth.global_def import User
 import os
 import time
 
-def recordDebit(user : User):
+
+def recordDebit(user: User):
     """
     Mencatat pemasukan (debit) yang diinputkan oleh pengguna.
 
@@ -22,7 +23,7 @@ def recordDebit(user : User):
     pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
-        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date = dt.now().strftime("%Y-%m-%d %H:%M:%S")
     if pilihTanggal == 2:
         # Meminta pengguna memasukkan tanggal secara manual satu per satu
         year = input("Masukkan tahun (Format: YYYY): ")
@@ -37,19 +38,22 @@ def recordDebit(user : User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+            date = datetime.datetime(
+                int(year), int(month), int(day), int(hour), int(minute), int(second)
+            )
         except ValueError:
             print("Format tanggal tidak valid.")
             return
 
-    debit = int(input('Masukkan jumlah pemasukan: '))
+    debit = int(input("Masukkan jumlah pemasukan: "))
     last_outcome = getLastOutcome(user)
     new_outcome = last_outcome + debit
 
     newTransaction = Trans.Transaction(date, debit, 0, new_outcome, "Uang Masuk")
     saveTransaction(newTransaction, user)
 
-def recordCredit(user : User):
+
+def recordCredit(user: User):
     """
     Mencatat pengeluaran (credit) yang diinputkan oleh pengguna.
 
@@ -64,7 +68,7 @@ def recordCredit(user : User):
     pilihTanggal = int(input("pilih tanggal :"))
 
     if pilihTanggal == 1:
-        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date = dt.now().strftime("%Y-%m-%d %H:%M:%S")
     if pilihTanggal == 2:
         # Meminta pengguna memasukkan tanggal secara manual satu per satu
         year = input("Masukkan tahun (Format: YYYY): ")
@@ -79,11 +83,13 @@ def recordCredit(user : User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+            date = datetime.datetime(
+                int(year), int(month), int(day), int(hour), int(minute), int(second)
+            )
         except ValueError:
             print("Format tanggal tidak valid.")
             return
-    credit = int(input('Masukkan jumlah pengeluaran: '))
+    credit = int(input("Masukkan jumlah pengeluaran: "))
     last_outcome = getLastOutcome(user)
     new_outcome = last_outcome - credit
 
@@ -96,13 +102,14 @@ def recordCredit(user : User):
 
     for i in range(7):
         if pilihKategori == i:
-            kategori = Trans.Transaction.category[i-1]
+            kategori = Trans.Transaction.category[i - 1]
             break
 
     newTransaction = Trans.Transaction(date, 0, credit, new_outcome, kategori)
     saveTransaction(newTransaction, user)
 
-def saveTransaction(transaction, user : User):
+
+def saveTransaction(transaction, user: User):
     """
     Menyimpan transaksi ke dalam file user.fileName.
 
@@ -110,11 +117,14 @@ def saveTransaction(transaction, user : User):
     ------
     - Farrel Zandra - 231524007 - @quack22
     """
-    with open(user.fileName, 'a') as file:
-        file.write(f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n")
+    with open(user.fileName, "a") as file:
+        file.write(
+            f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n"
+        )
         file.close()
-    print('Transaksi berhasil disimpan!')
+    print("Transaksi berhasil disimpan!")
     sortTransaction(user)
+
 
 def showMonthlyRecap(user: User):
     """
@@ -123,128 +133,226 @@ def showMonthlyRecap(user: User):
     Author
     ------
     - Farrel Zandra - 231524007 - @quack22
+    - (Update) Thafa Fadillah Ramdani - 231524027 - @AllThaf
     """
-    year = int(input('Masukkan tahun (contoh: 2024): '))
-    month = int(input('Masukkan bulan (contoh: 1 untuk Januari): '))
+    year = int(input("Masukkan tahun (contoh: 2024): "))
+    month = int(input("Masukkan bulan (contoh: 1 untuk Januari): "))
     totalDebit = 0
     totalCredit = 0
-    with open(user.fileName,'r') as file:
+    totalMakananMinuman = 0
+    totalPendidikan = 0
+    totalKesehatan = 0
+    totalBelanja = 0
+    totalTransportasi = 0
+    totalLainnya = 0
+    with open(user.fileName, "r") as file:
         for line in file:
-            data = line.split('|')
+            data = line.split("|")
             transDate = data[0].strip()
-            transYear, transMonth, _ = transDate.split('-')
+            transYear, transMonth, _ = transDate.split("-")
             if int(transYear) == year and int(transMonth) == month:
                 totalDebit += int(data[1].strip())
                 totalCredit += int(data[2].strip())
+                if data[4].strip() == Trans.Transaction.category[0]:
+                    totalMakananMinuman += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[1]:
+                    totalPendidikan += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[2]:
+                    totalKesehatan += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[3]:
+                    totalBelanja += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[4]:
+                    totalTransportasi += int(data[2].strip())
+                else:
+                    totalLainnya += int(data[2].strip())
     print(f"Rekap Bulan {month}/{year}:")
-    print(f"Total Pemasukan {totalDebit}")
-    print(f"Total Pengeluaran {totalCredit}")
+    print("----------------------------")
+    print(f"Total Pemasukan: Rp{totalDebit:,}")
+    print(f"Total Pengeluaran Keseluruhan: Rp{totalCredit:,}")
+    print("Pengeluaran perkategori")
+    print(f"1. Makanan/Minuman: Rp{totalMakananMinuman:,}")
+    print(f"2. Pendidikan: Rp{totalPendidikan:,}")
+    print(f"3. Kesehatan: Rp{totalKesehatan:,}")
+    print(f"4. Belanja: Rp{totalBelanja:,}")
+    print(f"5. Transportasi: Rp{totalTransportasi:,}")
+    print(f"6. Lainnya: Rp{totalLainnya:,}")
     file.close()
+
 
 def showDailyRecap(user: User):
     """
-        Menampilkan rekap transaksi bulanan.
+    Menampilkan rekap transaksi bulanan.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
+    - (Update) Thafa Fadillah Ramdani - 231524027 - @AllThaf
     """
+    year = int(input("Masukkan tahun (contoh: 2024): "))
+    month = int(input("Masukkan bulan (contoh: 1 untuk Januari): "))
+    day = int(input("Masukkan tanggal: "))
     totalDebit = 0
     totalCredit = 0
+    totalMakananMinuman = 0
+    totalPendidikan = 0
+    totalKesehatan = 0
+    totalBelanja = 0
+    totalTransportasi = 0
+    totalLainnya = 0
 
-    with open(user.fileName, 'r') as file:
+    with open(user.fileName, "r") as file:
         for line in file:
-            data = line.split('|')
-            transDateTime = data[0].strip() # mengambil elemen pertama dari array transDateTime.
-            transDate = transDateTime.split()[0] # memisahkan tanggal dan waktu, kemudian mengambil tanggal saja.
-            transYear, transMonth, transDay = transDate.split('-')
-            if int(transYear) == year and int(transMonth) == month and int(transDay) == day:
+            data = line.split("|")
+            transDateTime = data[
+                0
+            ].strip()  # mengambil elemen pertama dari array transDateTime.
+            transDate = transDateTime.split()[
+                0
+            ]  # memisahkan tanggal dan waktu, kemudian mengambil tanggal saja.
+            transYear, transMonth, transDay = transDate.split("-")
+            if (
+                int(transYear) == year
+                and int(transMonth) == month
+                and int(transDay) == day
+            ):
                 totalDebit += int(data[1].strip())
                 totalCredit += int(data[2].strip())
+                if data[4].strip() == Trans.Transaction.category[0]:
+                    totalMakananMinuman += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[1]:
+                    totalPendidikan += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[2]:
+                    totalKesehatan += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[3]:
+                    totalBelanja += int(data[2].strip())
+                elif data[4].strip() == Trans.Transaction.category[4]:
+                    totalTransportasi += int(data[2].strip())
+                else:
+                    totalLainnya += int(data[2].strip())
     print(f"Rekap tanggal {day}/{month}/{year}")
-    print('-----------------------------------')
-    print(f"Total Pemasukan: {totalDebit}")
-    print(f"Total Pengeluaran: {totalCredit}")
+    print("-----------------------------------")
+    print(f"Total Pemasukan: Rp{totalDebit:,}")
+    print(f"Total Pengeluaran Keseluruhan: Rp{totalCredit:,}")
+    print("Pengeluaran perkategori")
+    print(f"1. Makanan/Minuman: Rp{totalMakananMinuman:,}")
+    print(f"2. Pendidikan: Rp{totalPendidikan:,}")
+    print(f"3. Kesehatan: Rp{totalKesehatan:,}")
+    print(f"4. Belanja: Rp{totalBelanja:,}")
+    print(f"5. Transportasi: Rp{totalTransportasi:,}")
+    print(f"6. Lainnya: Rp{totalLainnya:,}")
     file.close()
 
-def showWeeklyRecap(year, month, user : User):
-    """
-        Menampilkan rekap transaksi mingguan dalam satu bulan.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+def showWeeklyRecap(user: User):
     """
+    Menampilkan rekap transaksi mingguan dalam satu bulan.
+
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
+    - (Update) Thafa Fadillah Ramdani - 231524027 - @AllThaf
+    """
+    year = int(input("Masukkan tahun (contoh: 2024): "))
+    month = int(input("Masukkan bulan (contoh: 1 untuk Januari): "))
     countDay = calendar.monthrange(year, month)[1]
     startDate = dt(year, month, 1)
     endDate = dt(year, month, countDay)
 
     currentDate = startDate
     while currentDate <= endDate:
-        nextWeek = currentDate + timedelta(days=(6-currentDate.weekday())) # penghitungan tanggal akhir minggu
+        nextWeek = currentDate + timedelta(
+            days=(6 - currentDate.weekday())
+        )  # penghitungan tanggal akhir minggu
         if nextWeek > endDate:
-            nextWeek = endDate # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
+            nextWeek = endDate  # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
 
         totalDebit = 0
         totalCredit = 0
+        totalMakananMinuman = 0
+        totalPendidikan = 0
+        totalKesehatan = 0
+        totalBelanja = 0
+        totalTransportasi = 0
+        totalLainnya = 0
 
-        with open(user.fileName, 'r') as file:
+        with open(user.fileName, "r") as file:
             for line in file:
-                data = line.split('|')
-                transDate = datetime.strptime(data[0].strip(), "%Y-%m-%d %H:%M:%S")
+                data = line.split("|")
+                transDate = datetime.datetime.strptime(
+                    data[0].strip(), "%Y-%m-%d %H:%M:%S"
+                )
                 if currentDate <= transDate <= nextWeek:
                     debit = int(data[1].strip())
                     credit = int(data[2].strip())
                     totalDebit += debit
                     totalCredit += credit
+                    if data[4].strip() == Trans.Transaction.category[0]:
+                        totalMakananMinuman += int(data[2].strip())
+                    elif data[4].strip() == Trans.Transaction.category[1]:
+                        totalPendidikan += int(data[2].strip())
+                    elif data[4].strip() == Trans.Transaction.category[2]:
+                        totalKesehatan += int(data[2].strip())
+                    elif data[4].strip() == Trans.Transaction.category[3]:
+                        totalBelanja += int(data[2].strip())
+                    elif data[4].strip() == Trans.Transaction.category[4]:
+                        totalTransportasi += int(data[2].strip())
+                    else:
+                        totalLainnya += int(data[2].strip())
+        print(
+            f"Rekap minggu {currentDate.strftime('%d %B %Y')} - {nextWeek.strftime('%d %B %Y')}:"
+        )
+        print("----------------------------------")
+        print(f"Total Pemasukan: Rp{totalDebit:,}")
+        print(f"Total Pengeluaran: Rp{totalCredit:,}")
+        print("Pengeluaran perkategori")
+        print(f"1. Makanan/Minuman: Rp{totalMakananMinuman:,}")
+        print(f"2. Pendidikan: Rp{totalPendidikan:,}")
+        print(f"3. Kesehatan: Rp{totalKesehatan:,}")
+        print(f"4. Belanja: Rp{totalBelanja:,}")
+        print(f"5. Transportasi: Rp{totalTransportasi:,}")
+        print(f"6. Lainnya: Rp{totalLainnya:,}")
 
-        print(f"Rekap minggu {currentDate.strftime('%d %B %Y')} - {nextWeek.strftime('%d %B %Y')}:")
-        print('----------------------------------')
-        print(f"Total Pemasukan  : Rp{totalDebit}")
-        print(f"Total Pengeluaran  : Rp{totalCredit}")
-        print()
-        file.close()
+        currentDate = nextWeek + timedelta(days=1)  # lompat ke minggu selanjutnya.
+    file.close()
 
-        currentDate = nextWeek + timedelta(days=1) # lompat ke minggu selanjutnya.
 
-def readTransaction(user : User):
+def readTransaction(user: User):
     """
     Membaca transaksi dari file dan mengembalikan daftar transaksi.
 
     Author
     ------
     Farras Ahmad Rasyid - 231524006 - @bamoebin
-    
+
     Parameter:
         user : User: Nama file yang berisi data transaksi.
     """
     transactions = []
     try:
-        with open(user.fileName, 'r') as file:
-            first_line = file.readline().strip()
-            # Memeriksa apakah baris pertama tidak kosong
-            if first_line:
-                file.seek(0)  # Kembalikan posisi file ke awal
-                for line in file:
-                    data = line.strip().split('|')
-                    trans_date = data[0].strip()
-                    debit = int(data[1].strip())
-                    credit = int(data[2].strip())
-                    outcome = int(data[3].strip())
-                    category = (data[4].strip())                
-                    # Membuat objek Transaction dari data yang dibaca
-                    newtransaction = Trans.Transaction(trans_date, debit, credit, outcome,  category)
-                    transactions.append(newtransaction)
-                file.close()
-                return transactions
-            else:
-                print("Data Kosong")
+        with open(user.fileName, "r") as file:
+            for line in file:
+                data = line.strip().split("|")
+                trans_date = data[0].strip()
+                debit = int(data[1].strip())
+                credit = int(data[2].strip())
+                outcome = int(data[3].strip())
+                category = data[4].strip()
+
+                # Membuat objek Transaction dari data yang dibaca
+                newtransaction = Trans.Transaction(
+                    trans_date, debit, credit, outcome, category
+                )
+                transactions.append(newtransaction)
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
         print("Terjadi kesalahan saat membaca file:", str(e))
 
-def sortTransaction(user : User):
+    file.close()
+    return transactions
+
+
+def sortTransaction(user: User):
     """
     Mengurutkan data transaksi dalam file berdasarkan tanggal.
 
@@ -261,7 +369,7 @@ def sortTransaction(user : User):
         sorted_transactions = sorted(transactions, key=lambda x: x.date)
 
         # Simpan data yang telah diurutkan kembali ke file
-        with open(user.fileName, 'w') as file:
+        with open(user.fileName, "w") as file:
             for transaction in sorted_transactions:
                 line = f"{transaction.date} | {transaction.debit} | {transaction.credit} | {transaction.outcome} | {transaction.category}\n"
                 file.write(line)
@@ -272,7 +380,8 @@ def sortTransaction(user : User):
         print("Terjadi kesalahan saat mengurutkan data:", str(e))
         input("Tekan enter untuk melanjutkan...")
 
-def getLastOutcome(user : User):
+
+def getLastOutcome(user: User):
     """
     Mendapatkan nilai outcome terakhir dari file transaksi.
 
@@ -281,12 +390,14 @@ def getLastOutcome(user : User):
     - Satria Permata Sejati - 231524026 - @WeirdoKitten
     """
     try:
-        with open(user.fileName, 'r') as file:
+        with open(user.fileName, "r") as file:
             lines = file.readlines()
             if lines:
                 last_line = lines[-1].strip()
-                data = last_line.split('|')
-                last_outcome = int(data[3].strip())  # Ambil nilai outcome terakhir dari baris terakhir
+                data = last_line.split("|")
+                last_outcome = int(
+                    data[3].strip()
+                )  # Ambil nilai outcome terakhir dari baris terakhir
             else:
                 last_outcome = 0  # Jika file kosong, maka outcome terakhir adalah 0
             file.close()
@@ -295,6 +406,7 @@ def getLastOutcome(user : User):
         last_outcome = 0
     return last_outcome
 
+
 def printTransactions(user):
     """
     Mencetak informasi transaksi untuk user.
@@ -302,7 +414,7 @@ def printTransactions(user):
     Author
     ------
     Farras Ahmad Rasyid - 231524006 - @bamoebin
-    
+
     Parameter:
         user : User: Pengguna
     """
@@ -320,18 +432,21 @@ def printTransactions(user):
     else:
         print("Tidak ada transaksi untuk pengguna", user.name)
 
-def lastTransaction(user : User):
+
+def lastTransaction(user: User):
     try:
-        with open(user.fileName, 'r') as file:
+        with open(user.fileName, "r") as file:
             lines = file.readlines()
             last_line = lines[-1].strip()
-            data = last_line.split('|')
+            data = last_line.split("|")
             trans_date = data[0].strip()
             debit = int(data[1].strip())
             credit = int(data[2].strip())
             outcome = int(data[3].strip())
-            category = (data[4].strip())
-            print(f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nCategory : {category}\nRemains : {outcome}\n")
+            category = data[4].strip()
+            print(
+                f"=========================\nTanggal : {trans_date}\nDebit : {debit}\nCredit : {credit}\nCategory : {category}\nRemains : {outcome}\n"
+            )
     except FileNotFoundError:
         print("File tidak ditemukan.")
     except Exception as e:
@@ -340,23 +455,25 @@ def lastTransaction(user : User):
 
 def calculateNominal(total, targetDate, frequency):
     """
-        Menghitung nominal yang harus ditabung oleh pengguna per frekuensi waktunya.
+    Menghitung nominal yang harus ditabung oleh pengguna per frekuensi waktunya.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
 
-        Parameter
-        ---------
-        :param total
-        :param targetDate
-        :param frequency
+    Parameter
+    ---------
+    :param total
+    :param targetDate
+    :param frequency
     """
     currentDate = dt.now()
     if targetDate:
         targetDate = dt.strptime(targetDate, "%Y-%m-%d")
         if targetDate < currentDate:
-            print("Tanggal target tidak boleh kurang dari tanggal hari ini! Ulangi input...")
+            print(
+                "Tanggal target tidak boleh kurang dari tanggal hari ini! Ulangi input..."
+            )
             print()
             return createGoal()
     else:
@@ -365,7 +482,9 @@ def calculateNominal(total, targetDate, frequency):
     if frequency.lower() == "tahun":
         nominal = total / (targetDate.year - currentDate.year)
     elif frequency.lower() == "bulan":
-        monthsDiff = (targetDate.year - currentDate.year) * 12 + (targetDate.month - currentDate.month)
+        monthsDiff = (targetDate.year - currentDate.year) * 12 + (
+            targetDate.month - currentDate.month
+        )
         nominal = total - monthsDiff
     elif frequency.lower() == "minggu":
         weeksDiff = (targetDate - currentDate).days // 7
@@ -383,17 +502,17 @@ def calculateNominal(total, targetDate, frequency):
 
 def calculateTargetDate(total, frequency, nominal):
     """
-        Menghitung tanggal yang memungkinkan sebagai target apabila pengguna memilih rentang waktu fleksibel.
+    Menghitung tanggal yang memungkinkan sebagai target apabila pengguna memilih rentang waktu fleksibel.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
 
-        Parameter
-        ---------
-        :param total
-        :param frequency
-        :param nominal
+    Parameter
+    ---------
+    :param total
+    :param frequency
+    :param nominal
     """
     currentDate = dt.now()
     if frequency.lower() == "tahun":
@@ -408,20 +527,22 @@ def calculateTargetDate(total, frequency, nominal):
         print("Frekuensi tidak valid!")
         return
 
-    print(f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
+    print(
+        f"Dengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}"
+    )
 
 
 def isValidDate(date_str):
     """
-        Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
+    Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
 
-        Parameter
-        ---------
-        :param date_str
+    Parameter
+    ---------
+    :param date_str
     """
     try:
         dt.strptime(date_str, "%Y-%m-%d")
@@ -429,15 +550,35 @@ def isValidDate(date_str):
     except ValueError:
         return False
 
+
+def isValidDate(date_str):
+    """
+    Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
+
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
+
+    Parameter
+    ---------
+    :param date_str
+    """
+    try:
+        dt.strptime(date_str, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
+
 def createGoal():
     """
-        Menampilkan halaman untuk membuat tujuan dan target menabung.
+    Menampilkan halaman untuk membuat tujuan dan target menabung.
 
-        Author
-        ------
-        - Farrel Zandra - 231524007 - @quack22
+    Author
+    ------
+    - Farrel Zandra - 231524007 - @quack22
 
-        no param
+    no param
     """
     print("=== Buat Tujuan Keuanganmu ===")
     goal = input("Halo, apa tujuan keuanganmu?\n Beri tahu kami:")
@@ -448,7 +589,7 @@ def createGoal():
     print("2. Fleksibel")
     choice = input("Pilih opsi (1/2): ")
 
-    if choice == '1':
+    if choice == "1":
         targetDate = input("Masukkan tanggal (YYYY-MM-DD): ")
         if isValidDate(targetDate):
             frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
@@ -457,7 +598,7 @@ def createGoal():
             print("Format tanggal tidak valid! Ulangi input...")
             print()
             createGoal()
-    elif choice == '2':
+    elif choice == "2":
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
         nominal = int(input("Nominal (Rp): "))
         calculateTargetDate(total, frequency, nominal)
