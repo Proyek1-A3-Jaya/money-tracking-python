@@ -50,3 +50,15 @@ def showDailyRecap(user: User):
 
 def readTransaction(user: User):
     tr.readTransaction(user)
+
+
+def printTransactions(user: User):
+    tr.printTransactions(user)
+
+
+def lastTransaction(user: User):
+    tr.lastTransaction(user)
+
+
+def createGoal():
+    tr.createGoal()
