@@ -543,26 +543,7 @@ def calculateTargetDate(total: int, frequency: str, nominal: int):
     )
 
 
-def isValidDate(date_str: str):
-    """
-    Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
-
-    Author
-    ------
-    - Farrel Zandra - 231524007 - @quack22
-
-    Parameter
-    ---------
-    :param date_str
-    """
-    try:
-        dt.strptime(date_str, "%Y-%m-%d")
-        return True
-    except ValueError:
-        return False
-
-
-def isValidDate(date_str: str):
+def isValidDate(date_str: str) -> bool:
     """
     Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
 
