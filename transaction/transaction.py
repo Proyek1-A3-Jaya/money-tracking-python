@@ -39,7 +39,7 @@ def recordDebit(user: User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(
+            date = dt(
                 int(year), int(month), int(day), int(hour), int(minute), int(second)
             )
         except ValueError:
@@ -84,7 +84,7 @@ def recordCredit(user: User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(
+            date = dt(
                 int(year), int(month), int(day), int(hour), int(minute), int(second)
             )
         except ValueError:
@@ -182,7 +182,7 @@ def showMonthlyRecap(user: User):
 
 def showDailyRecap(user: User):
     """
-    Menampilkan rekap transaksi bulanan.
+    Menampilkan rekap transaksi harian.
 
     Author
     ------
@@ -253,6 +253,7 @@ def showWeeklyRecap(user: User):
     - Farrel Zandra - 231524007 - @quack22
     - (Update) Thafa Fadillah Ramdani - 231524027 - @AllThaf
     """
+
     year = int(input("Masukkan tahun (contoh: 2024): "))
     month = int(input("Masukkan bulan (contoh: 1 untuk Januari): "))
     countDay = calendar.monthrange(year, month)[1]
@@ -267,6 +268,8 @@ def showWeeklyRecap(user: User):
         if nextWeek > endDate:
             nextWeek = endDate  # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
 
+        nextWeek += timedelta(days=1)
+
         totalDebit = 0
         totalCredit = 0
         totalMakananMinuman = 0
@@ -279,26 +282,25 @@ def showWeeklyRecap(user: User):
         with open(user.fileName, "r") as file:
             for line in file:
                 data = line.split("|")
-                transDate = datetime.strptime(
-                    data[0].strip(), "%Y-%m-%d %H:%M:%S"
-                )
+                transDate = datetime.strptime(data[0].strip(), "%Y-%m-%d %H:%M:%S")
                 if currentDate <= transDate <= nextWeek:
                     debit = int(data[1].strip())
                     credit = int(data[2].strip())
                     totalDebit += debit
                     totalCredit += credit
-                    if data[4].strip() == Trans.Transaction.category[0]:
-                        totalMakananMinuman += int(data[2].strip())
-                    elif data[4].strip() == Trans.Transaction.category[1]:
-                        totalPendidikan += int(data[2].strip())
-                    elif data[4].strip() == Trans.Transaction.category[2]:
-                        totalKesehatan += int(data[2].strip())
-                    elif data[4].strip() == Trans.Transaction.category[3]:
-                        totalBelanja += int(data[2].strip())
-                    elif data[4].strip() == Trans.Transaction.category[4]:
-                        totalTransportasi += int(data[2].strip())
-                    else:
-                        totalLainnya += int(data[2].strip())
+                    if data[4].strip() != "Uang Masuk":
+                        if data[4].strip() == Trans.Transaction.category[0]:
+                            totalMakananMinuman += int(data[2].strip())
+                        elif data[4].strip() == Trans.Transaction.category[1]:
+                            totalPendidikan += int(data[2].strip())
+                        elif data[4].strip() == Trans.Transaction.category[2]:
+                            totalKesehatan += int(data[2].strip())
+                        elif data[4].strip() == Trans.Transaction.category[3]:
+                            totalBelanja += int(data[2].strip())
+                        elif data[4].strip() == Trans.Transaction.category[4]:
+                            totalTransportasi += int(data[2].strip())
+                        else:
+                            totalLainnya += int(data[2].strip())
         print(
             f"Rekap minggu {currentDate.strftime('%d %B %Y')} - {nextWeek.strftime('%d %B %Y')}:"
         )
@@ -311,13 +313,13 @@ def showWeeklyRecap(user: User):
         print(f"3. Kesehatan: Rp{totalKesehatan:,}")
         print(f"4. Belanja: Rp{totalBelanja:,}")
         print(f"5. Transportasi: Rp{totalTransportasi:,}")
-        print(f"6. Lainnya: Rp{totalLainnya:,}")
+        print(f"6. Lainnya: Rp{totalLainnya:,}\n")
 
-        currentDate = nextWeek + timedelta(days=1)  # lompat ke minggu selanjutnya.
+        currentDate = nextWeek  # lompat ke minggu selanjutnya.
     file.close()
 
 
-def readTransaction(user: User):
+def readTransaction(user: User) -> Trans:
     """
     Membaca transaksi dari file dan mengembalikan daftar transaksi.
 
@@ -382,7 +384,7 @@ def sortTransaction(user: User):
         input("Tekan enter untuk melanjutkan...")
 
 
-def getLastOutcome(user: User):
+def getLastOutcome(user: User) -> int:
     """
     Mendapatkan nilai outcome terakhir dari file transaksi.
 
@@ -408,7 +410,7 @@ def getLastOutcome(user: User):
     return last_outcome
 
 
-def printTransactions(user):
+def printTransactions(user: User):
     """
     Mencetak informasi transaksi untuk user.
 
@@ -435,6 +437,16 @@ def printTransactions(user):
 
 
 def lastTransaction(user: User):
+    """
+    Mencetak informasi terakhir yang dilakukan user.
+
+    Author
+    ------
+    Farras Ahmad Rasyid - 231524006 - @bamoebin
+
+    Parameter:
+        user : User: Pengguna
+    """
     try:
         with open(user.fileName, "r") as file:
             lines = file.readlines()
@@ -454,7 +466,7 @@ def lastTransaction(user: User):
         print("Terjadi kesalahan saat membaca file:", str(e))
 
 
-def calculateNominal(total, targetDate, frequency):
+def calculateNominal(total: int, targetDate: str, frequency: str):
     """
     Menghitung nominal yang harus ditabung oleh pengguna per frekuensi waktunya.
 
@@ -501,7 +513,7 @@ def calculateNominal(total, targetDate, frequency):
     print()
 
 
-def calculateTargetDate(total, frequency, nominal):
+def calculateTargetDate(total: int, frequency: str, nominal: int):
     """
     Menghitung tanggal yang memungkinkan sebagai target apabila pengguna memilih rentang waktu fleksibel.
 
@@ -528,29 +540,12 @@ def calculateTargetDate(total, frequency, nominal):
         print("Frekuensi tidak valid!")
         return
 
-    print(f"\nDengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}")
+    print(
+        f"\nDengan Rp{nominal} per {frequency.lower()}, target anda akan tercapai pada {targetDate.strftime('%d %B %Y')}"
+    )
 
 
-def isValidDate(date_str):
-    """
-    Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
-
-    Author
-    ------
-    - Farrel Zandra - 231524007 - @quack22
-
-    Parameter
-    ---------
-    :param date_str
-    """
-    try:
-        dt.strptime(date_str, "%Y-%m-%d")
-        return True
-    except ValueError:
-        return False
-
-
-def isValidDate(date_str):
+def isValidDate(date_str: str) -> bool:
     """
     Memeriksa apakah tanggal yang diinputkan user bernilai valid sesuai dengan format.
 
@@ -598,7 +593,7 @@ def createGoal():
             print()
 
         input("Ketik 1 untuk kembali ke halaman utama: ")
-    elif choice == '2':
+    elif choice == "2":
         frequency = input("Frekuensi tabungan (Tahun/Bulan/Minggu/Hari): ")
         nominal = int(input("Nominal (Rp): "))
         calculateTargetDate(total, frequency, nominal)
