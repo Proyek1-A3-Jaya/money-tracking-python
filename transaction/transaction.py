@@ -263,7 +263,7 @@ def showWeeklyRecap(user: User):
     currentDate = startDate
     while currentDate <= endDate:
         nextWeek = currentDate + timedelta(
-            days=(6 - currentDate.weekday())
+            days=(7 - currentDate.weekday())
         )  # penghitungan tanggal akhir minggu
         if nextWeek > endDate:
             nextWeek = endDate  # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
