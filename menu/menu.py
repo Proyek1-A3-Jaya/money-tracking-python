@@ -112,7 +112,7 @@ def showHomeMenu():
 
 def showTransactionMenu():
     """
-    Menampilkan menu setelah memilih opsi 'Catat Keuangan'.
+
 
     Author
     ------
@@ -150,6 +150,14 @@ def showRecapMenu():
 
 
 def handleHomeMenu(user: User):
+    """
+    Men-handle home menu.
+
+    Author
+    ------
+    - Thafa Fadillah Ramdani - 231524027 - @AllThaf
+    - Yobel El'Roy Doloksaribu - 231524029 - @k31p
+    """
     while True:
         clearScreen()
         showHomeMenu()
