@@ -263,10 +263,12 @@ def showWeeklyRecap(user: User):
     currentDate = startDate
     while currentDate <= endDate:
         nextWeek = currentDate + timedelta(
-            days=(7 - currentDate.weekday())
+            days=(6 - currentDate.weekday())
         )  # penghitungan tanggal akhir minggu
         if nextWeek > endDate:
             nextWeek = endDate  # tanggal akhir minggu tidak boleh melebihi tanggal akhir bulan.
+
+        nextWeek += timedelta(days=1)
 
         totalDebit = 0
         totalCredit = 0
@@ -313,7 +315,7 @@ def showWeeklyRecap(user: User):
         print(f"5. Transportasi: Rp{totalTransportasi:,}")
         print(f"6. Lainnya: Rp{totalLainnya:,}\n")
 
-        currentDate = nextWeek + timedelta(days=1)  # lompat ke minggu selanjutnya.
+        currentDate = nextWeek  # lompat ke minggu selanjutnya.
     file.close()
 
 
