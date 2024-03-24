@@ -39,7 +39,7 @@ def recordDebit(user: User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(
+            date = dt(
                 int(year), int(month), int(day), int(hour), int(minute), int(second)
             )
         except ValueError:
@@ -84,7 +84,7 @@ def recordCredit(user: User):
 
         # Mengonversi input tanggal menjadi objek datetime
         try:
-            date = datetime.datetime(
+            date = dt(
                 int(year), int(month), int(day), int(hour), int(minute), int(second)
             )
         except ValueError:
